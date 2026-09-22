@@ -67,7 +67,7 @@ export const site: SiteConfig = {
   licenseNumber: null,
   bookingUrl: null,
   foundedYear: null,
-  businessHours: 'ימים א-ה, 9:00-18:00',
+  businessHours: 'ימים א-ה, 9:00 עד 18:00',
   facts: {
     reverseMortgageMinAge: 65,
   },
