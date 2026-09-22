@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactButtons from '../components/ContactButtons.astro';
+import Missing from '../components/Missing.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config/site';
+
+const subjects = [
+  'מחזור משכנתא',
+  'איחוד הלוואות',
+  'משכנתא לרכישת דירה',
+  'הבנק סירב לי',
+  'הלוואה חוץ בנקאית',
+  'משכנתא לכל מטרה',
+  'משכנתא הפוכה',
+  'אחר',
+];
+---
+
+<BaseLayout
+  title="צרו קשר"
+  description="שיחת היכרות קצרה בלי התחייבות: בוואטסאפ, בטלפון או בטופס. משאירים פרטים ואני חוזר אליכם בערוץ שנוח לכם."
+  draft
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// CONTACT</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">בואו <span class="marker">נדבר</span></h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        הדרך המהירה ביותר היא וואטסאפ. אפשר גם טלפון או טופס, ואחזור אליכם בערוץ שתבחרו.
+      </p>
+      <div class="mt-6"><ContactButtons showPlaceholders /></div>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      <h2 class="text-2xl font-bold">השארת פרטים</h2>
+      <p class="mt-2 text-ink-soft">
+        הפרטים שתמלאו משמשים אותי כדי לחזור אליכם בלבד. אין צורך לצרף מסמכים בשלב הזה, ואי אפשר להעלות אותם כאן.
+      </p>
+
+      <form class="sheet mt-6 p-6" data-contact-form novalidate>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="sm:col-span-2">
+            <label for="name" class="block font-medium">שם מלא <span class="text-error" aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required
+              class="mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 focus:border-line" />
+            <p class="mt-1 text-sm text-error" data-error-for="name" role="alert" hidden></p>
+          </div>
+
+          <div>
+            <label for="phone" class="block font-medium">טלפון <span class="text-error" aria-hidden="true">*</span></label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required dir="ltr"
+              class="mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 text-start focus:border-line" />
+            <p class="mt-1 text-sm text-error" data-error-for="phone" role="alert" hidden></p>
+          </div>
+
+          <div>
+            <label for="email" class="block font-medium">מייל</label>
+            <input id="email" name="email" type="email" autocomplete="email" dir="ltr"
+              class="mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 text-start focus:border-line" />
+            <p class="mt-1 text-sm text-error" data-error-for="email" role="alert" hidden></p>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="subject" class="block font-medium">במה מדובר?</label>
+            <select id="subject" name="subject"
+              class="mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 focus:border-line">
+              {subjects.map((s) => <option value={s}>{s}</option>)}
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="message" class="block font-medium">כמה מילים על המצב</label>
+            <textarea id="message" name="message" rows="5"
+              class="mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 focus:border-line"></textarea>
+            <p class="mt-1 text-sm text-muted">לא צריך לפרט מספרים רגישים כאן. את זה נעשה בשיחה.</p>
+          </div>
+
+          <fieldset class="sm:col-span-2">
+            <legend class="font-medium">איך נוח שאחזור אליכם?</legend>
+            <div class="mt-2 flex flex-wrap gap-4">
+              {['וואטסאפ', 'טלפון', 'מייל'].map((c, i) => (
+                <label class="flex items-center gap-2">
+                  <input type="radio" name="channel" value={c} checked={i === 0} class="size-5 accent-line" />
+                  {c}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="sm:col-span-2">
+            <label class="flex items-start gap-3">
+              <input id="consent" name="consent" type="checkbox" required class="mt-1 size-5 accent-line" />
+              <span>
+                קראתי ואני מאשר/ת את <a href="/privacy-policy">מדיניות הפרטיות</a> ואת השימוש בפרטים שלי לצורך חזרה אליי.
+                <span class="text-error" aria-hidden="true">*</span>
+              </span>
+            </label>
+            <p class="mt-1 text-sm text-error" data-error-for="consent" role="alert" hidden></p>
+          </div>
+        </div>
+
+        <!-- Honeypot: hidden from people, tempting for bots. -->
+        <div class="absolute -start-[9999px]" aria-hidden="true">
+          <label for="company">חברה</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- TODO: Cloudflare Turnstile widget mounts here before launch. -->
+        <div data-turnstile></div>
+
+        <button type="submit" class="btn btn-primary mt-6 w-full sm:w-auto">שליחה</button>
+        <p class="mt-4 text-sm" data-form-status role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div class="sheet p-6">
+        <p class="mono-tag">// DIRECT</p>
+        <ul class="mt-3 space-y-3 text-ink-soft">
+          <li class="flex items-center gap-2">
+            <Icon name="message-circle" size={20} />
+            וואטסאפ: {site.contact.whatsapp ?? <Missing what="מספר וואטסאפ" />}
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="phone" size={20} />
+            טלפון: {site.contact.phone ?? <Missing what="טלפון" />}
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="mail" size={20} />
+            מייל: {site.contact.email ?? <Missing what="מייל" />}
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="clock" size={20} />
+            שעות מענה: <Missing what="שעות פעילות" />
+          </li>
+        </ul>
+        <p class="mt-4 text-sm text-muted">שירות בכל הארץ. פגישות פרונטליות, בזום או בטלפון.</p>
+      </div>
+
+      <div class="rounded-[16px] border border-ink/12 bg-surface p-6">
+        <p class="mono-tag">// DOCUMENTS</p>
+        <p class="mt-2 text-ink-soft">
+          מסמכים לא נשלחים דרך האתר. <a href="/documents">כאן מוסבר</a> איך מעבירים אותם בצורה מאובטחת, אחרי שיחת ההיכרות.
+        </p>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const showError = (field: string, message: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+      if (!el) return;
+      el.textContent = message;
+      el.hidden = !message;
+      form.querySelector<HTMLInputElement>(`[name="${field}"]`)?.setAttribute('aria-invalid', message ? 'true' : 'false');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      let firstInvalid: string | null = null;
+
+      const checks: [string, boolean, string][] = [
+        ['name', String(data.get('name') ?? '').trim().length >= 2, 'נא למלא שם מלא'],
+        ['phone', /^[\d\-+() ]{9,15}$/.test(String(data.get('phone') ?? '').trim()), 'נא למלא מספר טלפון תקין'],
+        ['email', !data.get('email') || /.+@.+\..+/.test(String(data.get('email'))), 'כתובת המייל לא נראית תקינה'],
+        ['consent', data.get('consent') === 'on', 'צריך לאשר את מדיניות הפרטיות'],
+      ];
+
+      for (const [field, ok, message] of checks) {
+        showError(field, ok ? '' : message);
+        if (!ok && !firstInvalid) firstInvalid = field;
+      }
+
+      if (firstInvalid) {
+        form.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
+        status.textContent = 'לא נשלח: יש שדות שצריך לתקן.';
+        status.className = 'mt-4 text-sm text-error';
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      status.textContent = 'שולח...';
+      status.className = 'mt-4 text-sm text-ink-soft';
+
+      try {
+        const res = await fetch('/api/contact', { method: 'POST', body: data });
+        if (!res.ok) throw new Error(String(res.status));
+        window.location.href = '/thank-you';
+      } catch {
+        button.disabled = false;
+        status.textContent = 'השליחה נכשלה. אפשר לנסות שוב, או לפנות בוואטסאפ.';
+        status.className = 'mt-4 text-sm text-error';
+      }
+    });
+  }
+</script>

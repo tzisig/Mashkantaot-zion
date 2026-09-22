@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaCard from '../components/CtaCard.astro';
+import Missing from '../components/Missing.astro';
+import Faq from '../components/Faq.astro';
+import Icon from '../components/Icon.astro';
+
+const included = [
+  'שיחת היכרות ובדיקת התאמה, בלי תשלום',
+  'מיפוי מלא של הנתונים: הכנסות, הלוואות קיימות, נכס והון עצמי',
+  'בניית מבנה מוצע, כולל העלות הכוללת ולא רק ההחזר החודשי',
+  'פנייה לגופים המתאימים והשוואת ההצעות שחוזרות',
+  'ליווי בשיחות מול הבנק עד החתימה',
+  'זמינות לשאלות לאורך כל התהליך',
+];
+
+const notIncluded = [
+  'עמלות ותשלומים שגובים הבנק או הגוף המממן',
+  'שמאות, ביטוח משכנתא, אגרות ורישום בטחונות',
+  'שכר טרחת עורך דין בעסקת הנכס',
+];
+
+const faqs = [
+  {
+    q: 'למה אין מחיר באתר?',
+    a: 'כי המחיר תלוי במה שצריך לעשות בפועל. תיק של מחזור פשוט ותיק של איחוד הלוואות מול כמה גופים הם לא אותה עבודה. במקום מספר כללי שלא אומר כלום, אני נותן מחיר מדויק אחרי שיחת ההיכרות.',
+  },
+  {
+    q: 'שיחת ההיכרות עולה כסף?',
+    a: 'לא. היא נועדה לבדוק אם אני בכלל יכול לעזור לכם. אם התשובה היא לא, אגיד את זה ולא ייגבה תשלום.',
+  },
+  {
+    q: 'מתי משלמים?',
+    a: 'אחרי שיחת ההיכרות אתם מקבלים הצעת מחיר ברורה עם מה שכלול ומה לא, ורק אם אתם מאשרים אותה מתחילים לעבוד.',
+  },
+  {
+    q: 'יש תשלום אם לא קיבלתי אישור?',
+    a: 'זה נקבע מראש ונכתב בהצעת המחיר, כדי שלא יהיו הפתעות בשום כיוון.',
+  },
+];
+---
+
+<BaseLayout
+  title="כמה עולה יועץ משכנתאות ואיך נקבע המחיר"
+  description="איך נקבע המחיר של ייעוץ משכנתאות, מה כלול בעבודה ומה לא, ולמה את המספר המדויק אתם מקבלים אחרי שיחת היכרות ולא לפניה."
+  draft
+  schema={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// PRICING</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">מחיר <span class="marker">בלי הפתעות</span></h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        אתם יודעים כמה זה עולה לפני שמתחילים, ומה בדיוק אתם מקבלים בתמורה.
+      </p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      <div class="prose-mz">
+        <p>
+          שאלה ראשונה שאנשים שואלים אותי היא כמה זה עולה, וזו שאלה נכונה. הבעיה היא שכל מספר שאתן לכם לפני שראיתי את
+          הנתונים שלכם יהיה ניחוש. תיק של מחזור משכנתא אחת, ותיק של איחוד חמש הלוואות עם סירוב קודם מהבנק, לא דורשים
+          את אותה עבודה ולא הוגן לתמחר אותם אותו דבר.
+        </p>
+        <p>
+          לכן אני עובד ככה: שיחת היכרות בלי תשלום, ואחריה הצעת מחיר מדויקת בכתב, עם מה שכלול, מה לא כלול ומתי משלמים.
+          אתם מחליטים אם להתקדם. בלי מחיר שמתגלה באמצע ובלי תוספות שצצות בסוף.
+        </p>
+      </div>
+
+      <div class="mt-10 rounded-[16px] border-2 border-dashed border-ink/25 p-6">
+        <p class="mono-tag">// PRICE</p>
+        <p class="mt-2 text-ink-soft">
+          טווחי המחיר יתווספו כאן אחרי שתקבע אותם: <Missing what="מודל התמחור והמחירים" />
+        </p>
+      </div>
+
+      <section aria-labelledby="included-title" class="mt-12">
+        <h2 id="included-title" class="text-2xl font-bold">מה כלול בעבודה</h2>
+        <ul class="mt-4 space-y-3">
+          {included.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-0.5 text-success"><Icon name="circle-check" size={22} /></span>
+              <span class="text-ink-soft">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="not-included-title" class="mt-10">
+        <h2 id="not-included-title" class="text-2xl font-bold">מה לא כלול</h2>
+        <p class="mt-2 text-ink-soft">אלה תשלומים לגורמים אחרים, ולא אליי:</p>
+        <ul class="mt-4 space-y-3">
+          {notIncluded.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-0.5 text-muted"><Icon name="circle-alert" size={22} /></span>
+              <span class="text-ink-soft">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <Faq items={faqs} />
+    </div>
+
+    <div class="lg:sticky lg:top-24 lg:self-start">
+      <CtaCard
+        title="רוצים לדעת כמה זה יעלה לכם?"
+        text="שיחת היכרות קצרה ואחריה הצעת מחיר בכתב. בלי התחייבות."
+      />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,6 +1,5 @@
 ---
-import Icon from './Icon.astro';
-import { phoneLink, whatsappLink } from '../config/site';
+import ContactButtons from './ContactButtons.astro';
 
 interface Props {
   title?: string;
@@ -11,24 +10,14 @@ const {
   title = 'רוצים לבדוק את המקרה שלכם?',
   text = 'שיחת היכרות קצרה, בלי התחייבות. נעבור על הנתונים ונראה אם ואיך אפשר לעזור.',
 } = Astro.props;
-
-const tel = phoneLink();
-const wa = whatsappLink();
 ---
 
 <aside class="sheet p-6">
   <p class="mono-tag">// NEXT STEP</p>
   <h2 class="mt-2 text-xl font-bold">{title}</h2>
   <p class="mt-2 text-ink-soft">{text}</p>
-  <a href="/contact" class="btn btn-primary mt-5 w-full">לשיחת היכרות</a>
-  {tel && (
-    <a href={tel} class="btn btn-outline mt-3 w-full" data-track="phone_click">
-      <Icon name="phone" size={20} /> להתקשר עכשיו
-    </a>
-  )}
-  {wa && (
-    <a href={wa} class="btn btn-outline mt-3 w-full" data-track="whatsapp_click" target="_blank" rel="noopener">
-      <Icon name="message-circle" size={20} /> וואטסאפ
-    </a>
-  )}
+  <div class="mt-5 [&_.btn]:w-full">
+    <ContactButtons layout="stack" />
+  </div>
+  <a href="/contact" class="btn btn-outline mt-3 w-full">לטופס יצירת קשר</a>
 </aside>

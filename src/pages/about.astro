@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaCard from '../components/CtaCard.astro';
+import Missing from '../components/Missing.astro';
+import { site } from '../config/site';
+
+const yearsAsEconomist = new Date().getFullYear() - site.economistSince;
+---
+
+<BaseLayout
+  title="אודות - מי עומד מאחורי משכנתאות ציון"
+  description="כלכלן מאז 2007 שעוסק בייעוץ משכנתאות: איך אני עובד, למה פתחתי את העסק, ומה אתם יכולים לצפות שיקרה אחרי שתפנו אליי."
+  draft
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// ABOUT</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">
+        כלכלן, ולא <span class="marker">קורס של חודשיים</span>
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        {`${yearsAsEconomist} שנים של עבודה עם מספרים, ואחר כך הכשרה ייעודית בתחום המשכנתאות.`}
+      </p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      <div class="prose-mz">
+        <p>
+          שמי <Missing what="שם מלא" />, ואני כלכלן מאז {site.economistSince}. את רוב השנים האלה עשיתי עם מספרים של
+          אחרים: תקציבים, תזרימים, החלטות שנראות קטנות על הנייר ועולות הרבה בפועל. בשלב מסוים הבנתי שהמקום שבו הפער
+          בין ידע לבין כסף הוא הכי גדול אצל משפחות רגילות הוא בדיוק המשכנתא.
+        </p>
+        <p>
+          כדי לעשות את זה כמו שצריך לא הסתפקתי ברקע הכלכלי, ועברתי הכשרה ייעודית בייעוץ משכנתאות. שני הדברים האלה
+          יחד הם מה שמאפשר לי לא רק למלא טפסים, אלא להבין מה עומד מאחורי כל מסלול ולמה הוא מתנהג איך שהוא מתנהג.
+        </p>
+
+        <h2>למה פתחתי את העסק</h2>
+        <p>
+          משתי סיבות, ושתיהן נכונות באותה מידה. הראשונה היא שראיתי משפחות שמשלמות כל חודש על משכנתא ועל ערימת
+          הלוואות, בלי שאף אחד ישב איתן פעם אחת ועשה סדר. השנייה פשוטה יותר: זה מה שאני אוהב לעשות.
+        </p>
+        <p>
+          אין לי אינטרס שתיקחו דווקא משכנתא גדולה או דווקא אצל גוף מסוים. אם המסקנה מהבדיקה היא שעדיף לא לעשות כלום,
+          אגיד לכם את זה, גם אם זה אומר שאין עסקה.
+        </p>
+
+        <h2>איך אני עובד</h2>
+        <p>
+          מתחילים בשיחת היכרות קצרה, בלי תשלום ובלי התחייבות, שבה אני מבין את המצב ואתם מבינים אם אני האדם הנכון
+          בשבילכם. אחר כך אוספים נתונים: הכנסות, הלוואות קיימות, נכס והון עצמי. משם אני בונה תמונה שמציגה לפחות שתי
+          אפשרויות, כולל מה קורה אם לא עושים כלום, ותמיד עם העלות הכוללת לצד ההחזר החודשי.
+        </p>
+        <p>
+          אני עובד עם לקוחות בכל הארץ. פגישה יכולה להיות אצלכם, בזום או בטלפון, ורוב התהליך מתנהל ממילא במסמכים
+          ובשיחות. מסמכים רגישים לא מועלים לאתר הזה, ויש
+          <a href="/documents"> עמוד שמסביר בדיוק איך מעבירים אותם</a>.
+        </p>
+
+        <h2>מה אני לא עושה</h2>
+        <p>
+          אני לא מבטיח אישור, ולא מבטיח חיסכון. אף אחד לא יכול, ומי שכן מבטיח כזה דבר לפני שראה את הנתונים שלכם
+          פשוט מוכר לכם חתול בשק. מה שאני כן מתחייב עליו זה שתבינו בדיוק מה המצב, מה האפשרויות וכמה כל אחת מהן
+          עולה. את ההחלטה אתם מקבלים.
+        </p>
+      </div>
+
+      <section aria-labelledby="facts-title" class="mt-12 rounded-[16px] border border-ink/12 bg-surface p-6">
+        <h2 id="facts-title" class="mono-tag">// FACTS</h2>
+        <dl class="mt-4 grid gap-5 sm:grid-cols-3">
+          <div>
+            <dt class="text-sm text-ink-soft">כלכלן מאז</dt>
+            <dd class="text-2xl font-extrabold tabular-nums">{site.economistSince}</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-ink-soft">אזור שירות</dt>
+            <dd class="text-2xl font-extrabold">כל הארץ</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-ink-soft">מספר עוסק</dt>
+            <dd class="text-lg font-bold">{site.businessId ?? <Missing what="מספר עוסק" />}</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+
+    <div class="lg:sticky lg:top-24 lg:self-start">
+      <CtaCard title="נעים להכיר" text="שיחת היכרות קצרה, בלי התחייבות, ואחריה תדעו אם יש לי מה לתרום לכם." />
+    </div>
+  </div>
+</BaseLayout>

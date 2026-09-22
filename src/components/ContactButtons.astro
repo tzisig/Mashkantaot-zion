@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import Missing from './Missing.astro';
+import { phoneLink, whatsappLink, site } from '../config/site';
+
+/**
+ * WhatsApp is the primary action everywhere on the site; phone is secondary.
+ * Anything not configured in src/config/site.ts renders as a visible placeholder.
+ */
+interface Props {
+  message?: string;
+  layout?: 'row' | 'stack';
+  showPlaceholders?: boolean;
+}
+
+const {
+  message = 'היי, הגעתי מהאתר ואשמח לבדוק את המשכנתא שלי',
+  layout = 'row',
+  showPlaceholders = false,
+} = Astro.props;
+
+const wa = whatsappLink(message);
+const tel = phoneLink();
+---
+
+<div class={layout === 'row' ? 'flex flex-wrap gap-3' : 'flex flex-col gap-3'}>
+  {wa ? (
+    <a href={wa} class="btn btn-primary" target="_blank" rel="noopener" data-track="whatsapp_click">
+      <Icon name="message-circle" size={20} /> שליחת הודעה בוואטסאפ
+    </a>
+  ) : (
+    showPlaceholders && <p class="text-ink-soft">וואטסאפ: <Missing what="מספר וואטסאפ" /></p>
+  )}
+
+  {tel ? (
+    <a href={tel} class="btn btn-outline" data-track="phone_click">
+      <Icon name="phone" size={20} /> {site.contact.phone}
+    </a>
+  ) : (
+    showPlaceholders && <p class="text-ink-soft">טלפון: <Missing what="טלפון" /></p>
+  )}
+</div>

@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaCard from '../components/CtaCard.astro';
+import Icon from '../components/Icon.astro';
+import Faq from '../components/Faq.astro';
+
+const steps = [
+  {
+    title: 'קודם שיחה',
+    text: 'לא שולחים מסמכים לפני שדיברנו. בשיחת ההיכרות אני מבין מה המצב ומה באמת צריך, וכך לא נאסף מידע מיותר.',
+  },
+  {
+    title: 'רשימה אישית',
+    text: 'אחרי השיחה אתם מקבלים רשימה מדויקת של המסמכים הרלוונטיים למקרה שלכם, ולא רשימה גנרית.',
+  },
+  {
+    title: 'תיקייה ייעודית',
+    text: 'אני פותח תיקייה נפרדת עבורכם ושולח קישור אישי. ההעלאה מתבצעת ישירות לתיקייה, בלי לשלוח מסמכים בצ׳אט או במייל פתוח.',
+  },
+  {
+    title: 'מחיקה בסיום',
+    text: 'בתום התהליך המסמכים נשמרים רק כמה שנדרש, ומעבר לכך נמחקים. הפירוט המלא נמצא במדיניות הפרטיות.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'למה אי אפשר להעלות מסמכים דרך האתר?',
+    a: 'כי מסמכים פיננסיים הם מידע רגיש, ואתר תדמית הוא לא המקום לאחסן אותם. תיקייה ייעודית עם הרשאות אישיות בטוחה יותר ומסודרת יותר.',
+  },
+  {
+    q: 'אפשר לשלוח בוואטסאפ?',
+    a: 'לשאלות ולתיאומים כן. למסמכים עדיף שלא: הם נשארים אצלכם בגלריה, עוברים גיבוי לענן, ולעיתים מגיעים בשגגה לאדם אחר.',
+  },
+  {
+    q: 'אין לי חשבון Google. מה עושים?',
+    a: 'אין בעיה, יש דרכים חלופיות להעברה מאובטחת. נסגור את זה בשיחה לפי מה שנוח לכם.',
+  },
+  {
+    q: 'מי עוד רואה את המסמכים?',
+    a: 'אני, ובהמשך התהליך הגורם המממן הרלוונטי, לפי מה שסיכמנו איתכם מראש.',
+  },
+];
+---
+
+<BaseLayout
+  title="העברת מסמכים - איך עושים את זה נכון"
+  description="באתר הזה לא מעלים מסמכים. הסבר איך מעבירים מסמכים פיננסיים בצורה מאובטחת דרך תיקייה ייעודית, מה נדרש ומתי, ומה קורה איתם בסיום."
+  draft
+  schema={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// DOCUMENTS</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">
+        מסמכים לא מעלים <span class="marker">לאתר</span>
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        תלושי שכר ותדפיסי בנק הם מידע רגיש. הנה הדרך שבה אני מקבל אותם, וכך גם אתם יודעים איפה הם נמצאים.
+      </p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      <ol class="grid gap-5 sm:grid-cols-2">
+        {steps.map((s, i) => (
+          <li class="sheet p-6">
+            <span class="mono-tag">STEP {String(i + 1).padStart(2, '0')}</span>
+            <h2 class="mt-2 text-xl font-bold">{s.title}</h2>
+            <p class="mt-2 text-ink-soft">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <section aria-labelledby="dont-title" class="mt-12 rounded-[16px] border border-error/30 bg-surface p-6">
+        <h2 id="dont-title" class="flex items-center gap-2 text-xl font-bold">
+          <span class="text-error"><Icon name="circle-alert" size={22} /></span>
+          מה לא לעשות
+        </h2>
+        <ul class="mt-3 space-y-2 text-ink-soft">
+          <li>לא לשלוח סיסמאות לחשבון הבנק. אף פעם, לאף אחד.</li>
+          <li>לא לתת גישה לאזור האישי בבנק. אני לא צריך אותה.</li>
+          <li>לא לשלוח צילומי מסמכים בקבוצות או בצ׳אטים משותפים.</li>
+          <li>לא לשלוח מסמכים למי שיצר איתכם קשר בלי שביקשתם, גם אם הוא מציג את עצמו בשמי.</li>
+        </ul>
+      </section>
+
+      <div class="prose-mz mt-12">
+        <h2>אילו מסמכים בדרך כלל נדרשים</h2>
+        <p>
+          זה משתנה לפי סוג הבקשה, אבל בגדול מדובר בשלוש קבוצות: הוכחת הכנסה, תמונת ההתנהלות הפיננסית ומסמכי הנכס.
+          לשכירים זה בדרך כלל תלושי שכר ותדפיסי חשבון, לעצמאים דוחות שומה ואישור רואה חשבון, ולעסקה עצמה חוזה,
+          נסח טאבו או אישור זכויות.
+        </p>
+        <p>
+          אם חלק מהמסמכים לא בידיכם, זה לא מעכב את שיחת ההיכרות. מתחילים עם מה שיש, ומשלימים בדרך.
+        </p>
+      </div>
+
+      <Faq items={faqs} />
+    </div>
+
+    <div class="lg:sticky lg:top-24 lg:self-start">
+      <CtaCard
+        title="לפני ששולחים משהו"
+        text="קודם שיחה קצרה, ורק אחר כך רשימת מסמכים אישית וקישור לתיקייה."
+      />
+    </div>
+  </div>
+</BaseLayout>
