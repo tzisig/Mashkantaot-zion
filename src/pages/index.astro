@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MortgageCalculator from '../components/MortgageCalculator.astro';
+import Icon from '../components/Icon.astro';
+import Missing from '../components/Missing.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
+const reasons = [
+  {
+    icon: 'calculator',
+    title: `כלכלן משנת ${site.economistSince}`,
+    text: 'הבנה של המספרים שמאחורי המשכנתא - לא רק של הטפסים.',
+  },
+  {
+    icon: 'scale',
+    title: 'עובד בשבילכם',
+    text: 'המטרה היא המבנה שמתאים לכם ולמשפחה שלכם, לא למי שנותן את ההלוואה.',
+  },
+  {
+    icon: 'file-text',
+    title: 'מחיר ידוע מראש',
+    text: 'מה כלול ומה עולה - לפני שמתחילים, בלי הפתעות.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'לא עוצרים בסירוב הראשון',
+    text: 'כשבנק אחד אומר לא, בודקים למה ומה עוד אפשר לעשות.',
+  },
+];
+
+const steps = [
+  { title: 'שיחת היכרות', text: 'מבינים איפה אתם עומדים ומה אתם צריכים. בלי התחייבות.' },
+  { title: 'בדיקת נתונים', text: 'אוספים את המסמכים הרלוונטיים ובונים תמונה כלכלית מלאה.' },
+  { title: 'בניית תמהיל ופנייה לגופים', text: 'מתכננים את מבנה המשכנתא ומשווים בין הצעות.' },
+  { title: 'ליווי עד החתימה', text: 'עוברים יחד על ההצעות והמסמכים עד הסוף.' },
+];
+---
+
+<BaseLayout
+  title="יועץ משכנתא - מחזור משכנתא ואיחוד הלוואות"
+  description="ייעוץ משכנתאות אישי בכל הארץ: משכנתא לרכישת דירה, מחזור משכנתא, איחוד הלוואות ומסורבי בנקים. כלכלן משנת 2007, מחיר ידוע מראש."
+  draft
+>
+  <!-- Hero -->
+  <section class="blueprint border-b-2 border-ink">
+    <div class="container-site grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <p class="mono-tag">// ECONOMIST SINCE {site.economistSince}</p>
+        <h1 class="mt-3 text-[clamp(2.25rem,5.4vw,3.75rem)] font-extrabold">
+          המספרים של המשכנתא שלכם. <span class="marker">בלי אותיות קטנות.</span>
+        </h1>
+        <p class="mt-5 max-w-[34rem] text-lg text-ink-soft md:text-xl">
+          ייעוץ משכנתאות, מחזור משכנתא ואיחוד הלוואות. מחיר ידוע מראש וליווי עד החתימה - בכל הארץ.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact" class="btn btn-primary">לשיחת היכרות</a>
+          <a href="/services" class="btn btn-outline">כל השירותים</a>
+        </div>
+      </div>
+      <MortgageCalculator />
+    </div>
+  </section>
+
+  <!-- Services strip -->
+  <section aria-labelledby="services-title" class="border-b-2 border-ink bg-surface">
+    <h2 id="services-title" class="sr-only">השירותים</h2>
+    <ul class="container-site grid !px-0 sm:grid-cols-2 lg:grid-cols-4">
+      {services.map((s, i) => (
+        <li class="border-b-2 border-ink/10 sm:border-e-2 lg:[&:nth-child(4n)]:border-e-0">
+          <a href={`/services/${s.id}`} class="group flex h-full flex-col gap-2 p-6 text-ink no-underline transition-colors hover:bg-paper">
+            <span class="mono-tag">{pad(i + 1)}</span>
+            <span class="flex items-center justify-between gap-2 text-xl font-bold">
+              {s.data.heading}
+              <span class="text-line transition-transform group-hover:-translate-x-1"><Icon name="arrow-left" /></span>
+            </span>
+            <span class="text-[0.95rem] text-ink-soft">{s.data.summary}</span>
+          </a>
+        </li>
+      ))}
+      <li class="border-b-2 border-ink/10">
+        <a href="/mortgage-calculator" class="flex h-full flex-col justify-center gap-2 bg-ink p-6 text-white no-underline hover:bg-ink-soft">
+          <span class="mono-tag !text-highlight">{pad(services.length + 1)}</span>
+          <span class="text-xl font-bold">מחשבון משכנתא מלא</span>
+          <span class="text-[0.95rem] text-white/80">החזר חודשי, תקופה וריבית - בכמה שניות.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Why -->
+  <section aria-labelledby="why-title" class="py-16 md:py-24">
+    <div class="container-site">
+      <p class="mono-tag">// WHY</p>
+      <h2 id="why-title" class="mt-2 max-w-2xl text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">
+        ייעוץ שמתחיל <span class="marker">מהמספרים</span>, לא מהמכירה
+      </h2>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {reasons.map((r) => (
+          <li class="reveal rounded-[16px] border border-ink/12 bg-surface p-6">
+            <span class="grid size-12 place-items-center rounded-[10px] bg-paper text-line-strong"><Icon name={r.icon} size={26} /></span>
+            <h3 class="mt-4 text-xl font-bold">{r.title}</h3>
+            <p class="mt-2 text-ink-soft">{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section aria-labelledby="process-title" class="blueprint border-y-2 border-ink py-16 md:py-24">
+    <div class="container-site">
+      <p class="mono-tag">// PROCESS</p>
+      <h2 id="process-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">איך זה עובד</h2>
+      <ol class="mt-10 grid gap-5 md:grid-cols-4">
+        {steps.map((s, i) => (
+          <li class="reveal sheet p-6">
+            <span class="mono-tag">STEP {pad(i + 1)}</span>
+            <h3 class="mt-2 text-xl font-bold">{s.title}</h3>
+            <p class="mt-2 text-ink-soft">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-8 text-ink-soft">
+        מסמכים לא מעלים לאתר. <a href="/documents">כך מעבירים מסמכים בצורה מאובטחת</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Testimonials: real reviews only -->
+  <section aria-labelledby="reviews-title" class="py-16 md:py-24">
+    <div class="container-site">
+      <p class="mono-tag">// REVIEWS</p>
+      <h2 id="reviews-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">מה אומרים הלקוחות</h2>
+      <div class="mt-8 rounded-[16px] border-2 border-dashed border-ink/25 p-8 text-center text-ink-soft">
+        <Missing what="המלצות אמיתיות מלקוחות (או חיבור לביקורות Google)" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section aria-labelledby="cta-title" class="border-t-2 border-ink bg-ink py-16 text-white md:py-20">
+    <div class="container-site flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      <div>
+        <p class="mono-tag !text-highlight">// NEXT STEP</p>
+        <h2 id="cta-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">בואו נבדוק את המספרים שלכם</h2>
+        <p class="mt-3 max-w-xl text-white/80">שיחת היכרות קצרה, בלי התחייבות. אחריה תדעו אם ובמה ייעוץ יכול לעזור לכם.</p>
+      </div>
+      <a href="/contact" class="btn btn-primary !shadow-[4px_4px_0_#fdba74]">לשיחת היכרות</a>
+    </div>
+  </section>
+</BaseLayout>

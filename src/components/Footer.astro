@@ -1,0 +1,62 @@
+---
+import Logo from './Logo.astro';
+import Missing from './Missing.astro';
+import { site, phoneLink, whatsappLink } from '../config/site';
+import { mainNav, legalNav } from '../data/navigation';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+const tel = phoneLink();
+const wa = whatsappLink();
+---
+
+<footer class="mt-auto border-t-2 border-ink bg-ink text-white">
+  <div class="container-site grid gap-10 py-14 md:grid-cols-4">
+    <div class="space-y-3 [&_a]:text-white">
+      <Logo />
+      <p class="text-white/80">{site.tagline}. שירות בכל הארץ.</p>
+    </div>
+
+    <nav aria-label="שירותים">
+      <h2 class="mono-tag !text-highlight mb-3">// SERVICES</h2>
+      <ul class="space-y-2">
+        {services.map((s) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={`/services/${s.id}`}>{s.data.heading}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav aria-label="ניווט באתר">
+      <h2 class="mono-tag !text-highlight mb-3">// SITE</h2>
+      <ul class="space-y-2">
+        {mainNav.map((i) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={i.href}>{i.label}</a></li>)}
+        <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/areas">אזורי שירות</a></li>
+        <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/documents">העברת מסמכים</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="mono-tag !text-highlight mb-3">// CONTACT</h2>
+      <ul class="space-y-2 text-white/90">
+        <li>טלפון: {tel ? <a class="text-white" href={tel}>{site.contact.phone}</a> : <Missing what="טלפון" />}</li>
+        <li>וואטסאפ: {wa ? <a class="text-white" href={wa}>שליחת הודעה</a> : <Missing what="מספר וואטסאפ" />}</li>
+        <li>מייל: {site.contact.email ? <a class="text-white" href={`mailto:${site.contact.email}`}>{site.contact.email}</a> : <Missing what="מייל" />}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/15">
+    <div class="container-site flex flex-col gap-3 py-6 text-sm text-white/75 md:flex-row md:items-center md:justify-between">
+      <p>
+        © {year} {site.name}. {site.businessId ? `ע.מ. ${site.businessId}` : <Missing what="מספר עוסק" />}
+      </p>
+      <nav aria-label="מידע משפטי">
+        <ul class="flex flex-wrap gap-x-5 gap-y-2">
+          {legalNav.map((i) => <li><a class="text-white/80 hover:text-white" href={i.href}>{i.label}</a></li>)}
+        </ul>
+      </nav>
+    </div>
+    <p class="container-site pb-6 text-xs text-white/60">
+      המידע באתר הוא כללי ואינו מהווה ייעוץ או הצעה. כל החלטה מתקבלת לאחר בדיקה אישית של הנתונים.
+    </p>
+  </div>
+</footer>

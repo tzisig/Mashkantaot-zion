@@ -1,0 +1,9 @@
+---
+/** Visible placeholder for data the owner has not provided yet. */
+interface Props {
+  what: string;
+}
+const { what } = Astro.props;
+---
+
+<span class="missing">[חסר: {what}]</span>

@@ -1,0 +1,83 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { mainNav } from '../data/navigation';
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => current === href || current.startsWith(`${href}/`);
+---
+
+<header class="sticky top-0 z-40 border-b-2 border-ink bg-paper/95 backdrop-blur">
+  <div class="container-site flex h-[72px] items-center justify-between gap-4">
+    <Logo />
+
+    <nav aria-label="ניווט ראשי" class="hidden lg:block">
+      <ul class="flex items-center gap-6 text-[0.95rem] font-medium">
+        {mainNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-ink no-underline hover:text-line-strong aria-[current=page]:text-line-strong aria-[current=page]:underline"
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/contact" class="btn btn-primary hidden !min-h-11 !px-5 sm:inline-flex">לשיחת היכרות</a>
+      <button
+        type="button"
+        class="grid size-11 place-items-center rounded-[10px] border-2 border-ink lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <span class="sr-only" data-menu-label>פתיחת תפריט</span>
+        <span data-icon-open><Icon name="menu" /></span>
+        <span data-icon-close hidden><Icon name="x" /></span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" aria-label="ניווט ראשי (נייד)" class="border-t-2 border-ink bg-surface lg:hidden" hidden>
+    <ul class="container-site flex flex-col py-2">
+      {mainNav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="flex min-h-12 items-center border-b border-ink/10 text-lg text-ink no-underline"
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li class="py-4"><a href="/contact" class="btn btn-primary w-full">לשיחת היכרות</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.getElementById('mobile-nav');
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      toggle.querySelector<HTMLElement>('[data-icon-open]')!.hidden = open;
+      toggle.querySelector<HTMLElement>('[data-icon-close]')!.hidden = !open;
+      toggle.querySelector<HTMLElement>('[data-menu-label]')!.textContent = open ? 'סגירת תפריט' : 'פתיחת תפריט';
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Design directions - Mashkantot Zion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700&family=Rubik:wght@400;500;700;800&family=Assistant:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* Preview page only - not production code */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Heebo, system-ui, sans-serif; background: #f4f4f5; color: #18181b; line-height: 1.6; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
+  .topnav { position: sticky; top: 0; z-index: 10; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; padding: 12px 16px; background: #18181bee; }
+  .topnav a { color: #fff; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: #3f3f46; font-size: 15px; }
+  .intro { max-width: 900px; margin: 40px auto 8px; padding: 0 16px; }
+  .intro h1 { font-size: 28px; }
+  .draft { display: inline-block; font-size: 13px; background: #fef3c7; color: #78350f; padding: 2px 10px; border-radius: 999px; margin-top: 8px; }
+  section.dir { margin: 48px auto; max-width: 1200px; padding: 0 16px; }
+  .dir-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .dir-head h2 { font-size: 26px; }
+  .dir-head p { color: #52525b; max-width: 640px; }
+  .frame { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px -20px #0005; background: #fff; }
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .spec { background: #fff; border-radius: 16px; padding: 20px; }
+  .spec h3 { font-size: 15px; color: #52525b; margin-bottom: 12px; font-weight: 500; }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sw { width: 64px; text-align: center; font-size: 11px; direction: ltr; color: #52525b; }
+  .sw i { display: block; height: 48px; border-radius: 10px; margin-bottom: 4px; border: 1px solid #0001; }
+  .missing { background: #fee2e2; color: #7f1d1d; padding: 0 6px; border-radius: 6px; font-size: .85em; }
+  .site-nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; gap: 16px; }
+  .site-nav ul { display: flex; gap: 22px; list-style: none; font-size: 15px; }
+  @media (max-width: 760px) { .site-nav ul { display: none; } }
+
+  /* ---------- A: Horizon ---------- */
+  .a { --ink: #1e1b4b; --dusk: #4338ca; --sun: #f97316; --sand: #fdf6ec; --gold: #fde68a; font-family: Heebo, sans-serif; }
+  .a .hero { position: relative; color: #fff; background: linear-gradient(180deg, var(--ink) 0%, #312e81 38%, #9a3412 72%, #f59e0b 100%); min-height: 560px; overflow: hidden; }
+  .a .site-nav { color: #e0e7ff; }
+  .a .logo { font-family: 'Frank Ruhl Libre', serif; font-weight: 900; font-size: 24px; color: #fff; }
+  .a .hero-body { position: relative; z-index: 2; max-width: 640px; padding: 48px 28px 200px; }
+  .a .eyebrow { color: var(--gold); font-weight: 500; letter-spacing: .02em; }
+  .a h3.headline { font-family: 'Frank Ruhl Libre', serif; font-weight: 900; font-size: clamp(38px, 6vw, 68px); line-height: 1.05; margin: 12px 0 18px; }
+  .a .sub { color: #e0e7ff; font-size: 19px; max-width: 520px; }
+  .a .ctas { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .a .btn { padding: 14px 26px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 17px; }
+  .a .btn-main { background: var(--gold); color: var(--ink); }
+  .a .btn-ghost { border: 2px solid #ffffff80; color: #fff; }
+  .a .sun { position: absolute; inset-inline-start: 12%; bottom: 90px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, #fde68a 0%, #fb923c 55%, transparent 70%); opacity: .9; }
+  .a .dunes { position: absolute; bottom: 0; left: 0; width: 100%; height: 190px; z-index: 1; }
+  .a .band { background: var(--sand); color: var(--ink); padding: 40px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .a .card { background: #fff; border-radius: 18px; padding: 22px; border-top: 4px solid var(--sun); }
+  .a .card h4 { font-family: 'Frank Ruhl Libre', serif; font-size: 22px; }
+
+  /* ---------- B: Blueprint ---------- */
+  .b { --ink: #0b1f3a; --line: #2563eb; --coral: #c2410c; --paper: #f8fbff; font-family: Rubik, sans-serif; }
+  .b .hero { background-color: var(--paper); background-image: linear-gradient(#2563eb14 1px, transparent 1px), linear-gradient(90deg, #2563eb14 1px, transparent 1px), linear-gradient(#2563eb08 1px, transparent 1px), linear-gradient(90deg, #2563eb08 1px, transparent 1px); background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px; color: var(--ink); }
+  .b .logo { font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 8px; }
+  .b .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; padding: 40px 28px 64px; align-items: center; }
+  @media (max-width: 860px) { .b .hero-grid { grid-template-columns: 1fr; } }
+  .b .tag { font-family: ui-monospace, monospace; font-size: 13px; color: var(--line); direction: ltr; text-align: right; }
+  .b h3.headline { font-size: clamp(36px, 5.4vw, 60px); font-weight: 800; line-height: 1.08; margin: 10px 0 16px; }
+  .b h3.headline mark { background: linear-gradient(transparent 62%, #fdba7466 62%); color: inherit; }
+  .b .sub { font-size: 18px; color: #334155; max-width: 520px; }
+  .b .btn { display: inline-block; margin-top: 26px; background: var(--coral); color: #fff; padding: 14px 26px; border-radius: 10px; font-weight: 700; text-decoration: none; box-shadow: 4px 4px 0 var(--ink); }
+  .b .calc { background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 24px; box-shadow: 10px 10px 0 #2563eb26; }
+  .b .calc h4 { font-size: 18px; margin-bottom: 14px; }
+  .b .calc label { display: flex; justify-content: space-between; font-size: 15px; margin-top: 14px; }
+  .b .calc output { font-weight: 700; direction: ltr; }
+  .b .calc input[type=range] { width: 100%; accent-color: var(--line); height: 28px; }
+  .b .result { margin-top: 18px; padding: 16px; border-radius: 12px; background: var(--ink); color: #fff; display: flex; justify-content: space-between; align-items: baseline; }
+  .b .result strong { font-size: 32px; direction: ltr; }
+  .b .fine { font-size: 12px; color: #64748b; margin-top: 8px; }
+  .b .strip { border-top: 2px solid var(--ink); display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); background: #fff; color: var(--ink); }
+  .b .strip div { padding: 20px 24px; border-inline-start: 2px solid var(--ink); font-weight: 500; }
+  .b .strip div:first-child { border-inline-start: 0; }
+  .b .strip small { display: block; font-family: ui-monospace, monospace; color: var(--line); direction: ltr; text-align: right; }
+
+  /* ---------- C: Bento ---------- */
+  .c { --teal: #0f766e; --deep: #134e4a; --lime: #d9f99d; --cream: #fbfaf5; font-family: Assistant, sans-serif; background: var(--cream); color: var(--deep); }
+  .c .logo { font-weight: 800; font-size: 24px; }
+  .c .logo span { color: var(--teal); }
+  .c .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(140px, auto); gap: 14px; padding: 12px 28px 36px; }
+  .c .tile { border-radius: 26px; padding: 24px; position: relative; overflow: hidden; }
+  .c .t-main { grid-column: span 2; grid-row: span 2; background: var(--teal); color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  .c h3.headline { font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; line-height: 1.05; }
+  .c .t-main p { color: #ccfbf1; font-size: 18px; margin-top: 12px; }
+  .c .t-cta { grid-column: span 2; background: var(--lime); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .c .t-cta b { font-size: 24px; }
+  .c .btn { background: var(--deep); color: #fff; padding: 14px 24px; border-radius: 999px; font-weight: 800; text-decoration: none; }
+  .c .t-s { background: #fff; border: 1px solid #134e4a1f; display: flex; flex-direction: column; justify-content: space-between; }
+  .c .t-s h4 { font-size: 21px; font-weight: 800; }
+  .c .t-s p { font-size: 15px; color: #3f6b67; }
+  .c .t-s .arrow { align-self: flex-end; width: 40px; height: 40px; border-radius: 50%; background: var(--cream); display: grid; place-items: center; }
+  .c .t-dark { background: var(--deep); color: #fff; }
+  .c .t-dark p { color: #a7f3d0; }
+  .c .ring { position: absolute; inset-inline-end: -60px; bottom: -60px; width: 220px; height: 220px; border: 36px solid #ffffff1a; border-radius: 50%; }
+  @media (max-width: 860px) { .c .bento { grid-template-columns: 1fr 1fr; } .c .t-main, .c .t-cta { grid-column: span 2; } }
+  @media (max-width: 520px) { .c .bento { grid-template-columns: 1fr; } .c .t-main, .c .t-cta { grid-column: span 1; grid-row: auto; } }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .a .sun { animation: rise 6s ease-out both; }
+    @keyframes rise { from { transform: translateY(80px); opacity: 0; } to { transform: none; opacity: .9; } }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Directions">
+  <a href="#a">A. אופק</a>
+  <a href="#b">B. שרטוט</a>
+  <a href="#c">C. בנטו</a>
+</nav>
+
+<div class="intro">
+  <h1>משכנתאות ציון - 3 כיוונים עיצוביים</h1>
+  <p>כל כיוון מציג מסך ראשון (דסקטופ, מתכווץ למובייל), פלטה וטיפוגרפיה. בחר אחד, או שלב אלמנטים.</p>
+  <span class="draft">כל הטקסטים - טיוטה לאישור. אין נתונים, מחירים או המלצות מומצאים.</span>
+</div>
+
+<!-- ================= A ================= -->
+<section class="dir" id="a">
+  <div class="dir-head">
+    <div>
+      <h2>A. אופק</h2>
+      <p>משחק על אופקים - העיר שלך והמילה "אופק". שקיעה מדברית שהופכת לזריחה: מסר רגשי של "לחזור לשליטה". חם, מקומי, זכיר. הכי ייחודי בשוק.</p>
+    </div>
+  </div>
+  <div class="frame a">
+    <div class="hero">
+      <div class="site-nav">
+        <span class="logo">משכנתאות ציון</span>
+        <ul><li>שירותים</li><li>מחשבון</li><li>מחירים</li><li>אזורי שירות</li><li>צור קשר</li></ul>
+      </div>
+      <div class="sun" aria-hidden="true"></div>
+      <div class="hero-body">
+        <div class="eyebrow">ייעוץ משכנתאות · מחזור · איחוד הלוואות</div>
+        <h3 class="headline">להחזיר לעצמך<br>את האופק.</h3>
+        <p class="sub">כלכלן משנת 2007. בודק איתך את המשכנתא וההלוואות, ומחפש את המבנה שמתאים לך - מאופקים ולכל הדרום.</p>
+        <div class="ctas">
+          <a class="btn btn-main" href="#a">לתיאום שיחת היכרות</a>
+          <a class="btn btn-ghost" href="#a">וואטסאפ <span class="missing">[חסר: מספר]</span></a>
+        </div>
+      </div>
+      <svg class="dunes" viewBox="0 0 1200 190" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 110 C200 60 380 140 600 100 S1000 50 1200 95 V190 H0Z" fill="#fcd9a8"/>
+        <path d="M0 140 C260 100 460 170 720 135 S1050 110 1200 140 V190 H0Z" fill="#fdf6ec"/>
+      </svg>
+    </div>
+    <div class="band">
+      <div class="card"><h4>מחזור משכנתא</h4><p>בדיקה אם המבנה הנוכחי עדיין מתאים לך.</p></div>
+      <div class="card"><h4>איחוד הלוואות</h4><p>כמה הלוואות - תשלום אחד מסודר.</p></div>
+      <div class="card"><h4>הבנק סירב?</h4><p>לא עוצרים שם. בודקים מקורות נוספים.</p></div>
+      <div class="card"><h4>משכנתא הפוכה</h4><p>לבני 60 ומעלה, עם הסבר מלא על הסיכונים.</p></div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>פלטה</h3><div class="swatches">
+      <div class="sw"><i style="background:#1e1b4b"></i>#1E1B4B</div>
+      <div class="sw"><i style="background:#4338ca"></i>#4338CA</div>
+      <div class="sw"><i style="background:#f97316"></i>#F97316</div>
+      <div class="sw"><i style="background:#fde68a"></i>#FDE68A</div>
+      <div class="sw"><i style="background:#fdf6ec"></i>#FDF6EC</div>
+    </div></div>
+    <div class="spec"><h3>טיפוגרפיה</h3>
+      <p style="font-family:'Frank Ruhl Libre';font-weight:900;font-size:28px">פרנק רוּהל - כותרות</p>
+      <p style="font-family:Heebo">Heebo - גוף טקסט, קריא ונקי</p></div>
+    <div class="spec"><h3>חוזקות / סיכונים</h3><p>+ זכיר, רגשי, מקומי. + מבדל לגמרי מהמתחרים (כולם כחול-לבן).<br>- דורש צילום/אילוסטרציה ברמה גבוהה בהמשך.</p></div>
+  </div>
+</section>
+
+<!-- ================= B ================= -->
+<section class="dir" id="b">
+  <div class="dir-head">
+    <div>
+      <h2>B. שרטוט</h2>
+      <p>דף שרטוט של אדריכל - רשת, קווים, מספרים. המחשבון (מילת החיפוש הגדולה ביותר - 10K-100K) הוא לב המסך הראשון. משדר דיוק של כלכלן.</p>
+    </div>
+  </div>
+  <div class="frame b">
+    <div class="hero">
+      <div class="site-nav">
+        <span class="logo"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M4 14 14 5l10 9v10H4Z" fill="none" stroke="#0b1f3a" stroke-width="2.5"/><path d="M11 24v-6h6v6" fill="none" stroke="#c2410c" stroke-width="2.5"/></svg>משכנתאות ציון</span>
+        <ul><li>שירותים</li><li>מחשבון</li><li>מחירים</li><li>אזורי שירות</li><li>צור קשר</li></ul>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <div class="tag">// ECONOMIST SINCE 2007</div>
+          <h3 class="headline">המספרים של<br>המשכנתא שלך. <mark>בלי אותיות קטנות.</mark></h3>
+          <p class="sub">ייעוץ משכנתאות, מחזור ואיחוד הלוואות. מחיר שקוף מראש, ליווי עד החתימה.</p>
+          <a class="btn" href="#b">לשיחת היכרות</a>
+        </div>
+        <form class="calc" aria-label="מחשבון משכנתא - המחשה" onsubmit="return false">
+          <h4>מחשבון משכנתא מהיר</h4>
+          <label for="amt">סכום המשכנתא <output id="amtO"></output></label>
+          <input id="amt" type="range" min="200000" max="3000000" step="50000" value="1000000">
+          <label for="yrs">תקופה (שנים) <output id="yrsO"></output></label>
+          <input id="yrs" type="range" min="5" max="30" step="1" value="25">
+          <label for="rate">ריבית שנתית (%) <output id="rateO"></output></label>
+          <input id="rate" type="range" min="1" max="8" step="0.1" value="4.5">
+          <div class="result"><span>החזר חודשי משוער</span><strong id="pay"></strong></div>
+          <p class="fine">חישוב שפיצר להמחשה בלבד. לא הצעה ולא ייעוץ.</p>
+        </form>
+      </div>
+    </div>
+    <div class="strip">
+      <div><small>01</small>מחזור משכנתא</div>
+      <div><small>02</small>איחוד הלוואות</div>
+      <div><small>03</small>מסורבי בנקים</div>
+      <div><small>04</small>משכנתא הפוכה</div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>פלטה</h3><div class="swatches">
+      <div class="sw"><i style="background:#0b1f3a"></i>#0B1F3A</div>
+      <div class="sw"><i style="background:#2563eb"></i>#2563EB</div>
+      <div class="sw"><i style="background:#c2410c"></i>#C2410C</div>
+      <div class="sw"><i style="background:#fdba74"></i>#FDBA74</div>
+      <div class="sw"><i style="background:#f8fbff"></i>#F8FBFF</div>
+    </div></div>
+    <div class="spec"><h3>טיפוגרפיה</h3>
+      <p style="font-family:Rubik;font-weight:800;font-size:28px">Rubik - כותרות</p>
+      <p style="font-family:Rubik">Rubik - גוף, ספרות ברורות למספרים</p></div>
+    <div class="spec"><h3>חוזקות / סיכונים</h3><p>+ המרה גבוהה: כלי שימושי כבר במסך הראשון. + מתאים לבידול "שקיפות".<br>- פחות רגשי; פונה לשכל.</p></div>
+  </div>
+</section>
+
+<!-- ================= C ================= -->
+<section class="dir" id="c">
+  <div class="dir-head">
+    <div>
+      <h2>C. בנטו</h2>
+      <p>רשת אריחים מודרנית: כל שירות הוא "כפתור" גדול וברור. בהיר, רענן, הכי קל לניווט - הלקוח רואה את כל האפשרויות בבת אחת ולא הולך לאיבוד.</p>
+    </div>
+  </div>
+  <div class="frame c">
+    <div class="site-nav">
+      <span class="logo">משכנתאות <span>ציון</span></span>
+      <ul><li>שירותים</li><li>מחשבון</li><li>מחירים</li><li>אזורי שירות</li><li>צור קשר</li></ul>
+    </div>
+    <div class="bento">
+      <div class="tile t-main">
+        <div>
+          <h3 class="headline">משכנתא ברורה.<br>החלטה רגועה.</h3>
+          <p>כלכלן משנת 2007 שעובד בשבילך - לא בשביל הבנק.</p>
+        </div>
+        <div class="ring" aria-hidden="true"></div>
+      </div>
+      <a class="tile t-s" href="#c"><div><h4>מחזור משכנתא</h4><p>בודקים אם אפשר לשפר את התנאים.</p></div><span class="arrow" aria-hidden="true">←</span></a>
+      <a class="tile t-s" href="#c"><div><h4>איחוד הלוואות</h4><p>סדר בתשלומים החודשיים.</p></div><span class="arrow" aria-hidden="true">←</span></a>
+      <a class="tile t-s t-dark" href="#c"><div><h4>הבנק סירב?</h4><p>יש עוד דרכים לבדוק.</p></div><span class="arrow" aria-hidden="true" style="color:#134e4a">←</span></a>
+      <a class="tile t-s" href="#c"><div><h4>משכנתא הפוכה</h4><p>לבני 60 ומעלה.</p></div><span class="arrow" aria-hidden="true">←</span></a>
+      <div class="tile t-cta"><b>שיחת היכרות, בלי התחייבות</b><a class="btn" href="#c">לתיאום</a></div>
+    </div>
+  </div>
+  <div class="specs">
+    <div class="spec"><h3>פלטה</h3><div class="swatches">
+      <div class="sw"><i style="background:#134e4a"></i>#134E4A</div>
+      <div class="sw"><i style="background:#0f766e"></i>#0F766E</div>
+      <div class="sw"><i style="background:#d9f99d"></i>#D9F99D</div>
+      <div class="sw"><i style="background:#fbfaf5"></i>#FBFAF5</div>
+      <div class="sw"><i style="background:#ccfbf1"></i>#CCFBF1</div>
+    </div></div>
+    <div class="spec"><h3>טיפוגרפיה</h3>
+      <p style="font-family:Assistant;font-weight:800;font-size:28px">Assistant - כותרות</p>
+      <p style="font-family:Assistant">Assistant - גוף, עגול וידידותי</p></div>
+    <div class="spec"><h3>חוזקות / סיכונים</h3><p>+ הניווט הכי פשוט - בדיוק מה שביקשת בבריף. + עובד מצוין במובייל.<br>- סגנון בנטו נפוץ יותר באתרי טכנולוגיה.</p></div>
+  </div>
+</section>
+
+<script>
+  // Spitzer (annuity) payment, illustration only
+  const $ = id => document.getElementById(id);
+  const fmt = n => new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS', maximumFractionDigits: 0 }).format(n);
+  function calc() {
+    const P = +$('amt').value, n = +$('yrs').value * 12, r = +$('rate').value / 100 / 12;
+    $('amtO').textContent = fmt(P);
+    $('yrsO').textContent = $('yrs').value;
+    $('rateO').textContent = (+$('rate').value).toFixed(1) + '%';
+    $('pay').textContent = fmt(P * r / (1 - Math.pow(1 + r, -n)));
+  }
+  ['amt', 'yrs', 'rate'].forEach(id => $(id).addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>

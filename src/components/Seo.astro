@@ -1,0 +1,59 @@
+---
+import { site } from '../config/site';
+
+export interface SeoProps {
+  title: string;
+  description: string;
+  /** Set for utility pages (thank-you, landing pages). */
+  noindex?: boolean;
+  ogImage?: string;
+  /** Extra JSON-LD objects for this page. */
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, noindex = false, ogImage, schema = [] } = Astro.props as SeoProps;
+
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site ?? site.url).href;
+const image = ogImage ? new URL(ogImage, Astro.site ?? site.url).href : undefined;
+
+const business: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'FinancialService',
+  name: site.name,
+  description: site.tagline,
+  url: site.url,
+  areaServed: { '@type': 'Country', name: 'Israel' },
+  inLanguage: 'he',
+};
+if (site.contact.phone) business.telephone = site.contact.phone;
+if (site.contact.email) business.email = site.contact.email;
+if (site.address) {
+  business.address = {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    postalCode: site.address.postalCode,
+    addressCountry: 'IL',
+  };
+}
+if (site.googleBusinessUrl) business.sameAs = [site.googleBusinessUrl];
+
+const jsonLd = [business, ...schema];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+{image && <meta property="og:image" content={image} />}
+<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+
+{jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}

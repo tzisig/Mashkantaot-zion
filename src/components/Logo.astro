@@ -1,0 +1,12 @@
+---
+import { site } from '../config/site';
+// Interim wordmark until the redesigned logo is delivered.
+---
+
+<a href="/" class="flex items-center gap-2 text-xl font-extrabold text-ink no-underline" aria-label={`${site.name} - דף הבית`}>
+  <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M4 14 14 5l10 9v10H4Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+    <path d="M11 24v-6h6v6" fill="none" stroke="var(--color-coral)" stroke-width="2.5" />
+  </svg>
+  <span>{site.name}</span>
+</a>

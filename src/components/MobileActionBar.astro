@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import { phoneLink, whatsappLink } from '../config/site';
+
+// Sticky call/WhatsApp bar on small screens. Renders only the actions that are configured.
+const tel = phoneLink();
+const wa = whatsappLink('היי, אשמח לשיחת היכרות לגבי משכנתא');
+---
+
+{(tel || wa) && (
+  <div class="fixed inset-x-0 bottom-0 z-40 grid border-t-2 border-ink bg-surface md:hidden" style={`grid-template-columns: repeat(${tel && wa ? 2 : 1}, 1fr)`}>
+    {tel && (
+      <a href={tel} class="flex min-h-14 items-center justify-center gap-2 font-bold text-ink no-underline" data-track="phone_click">
+        <Icon name="phone" /> התקשרו
+      </a>
+    )}
+    {wa && (
+      <a href={wa} class="flex min-h-14 items-center justify-center gap-2 bg-coral font-bold text-white no-underline" data-track="whatsapp_click" rel="noopener" target="_blank">
+        <Icon name="message-circle" /> וואטסאפ
+      </a>
+    )}
+  </div>
+)}
