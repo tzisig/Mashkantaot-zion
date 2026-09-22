@@ -26,4 +26,22 @@ const services = defineCollection({
   }),
 });
 
-export const collections = { services };
+const areas = defineCollection({
+  loader: glob({ base: './src/content/areas', pattern: '**/*.md' }),
+  schema: z.object({
+    city: z.string(),
+    title: z.string(),
+    heading: z.string(),
+    description: z.string().min(80).max(180),
+    primaryKeyword: z.string(),
+    /** Launch cities render first; later cities are added as content is ready. */
+    phase: z.number().default(1),
+    /** Shown on the areas index. */
+    summary: z.string(),
+    faqs: z.array(faq).default([]),
+    updated: z.date(),
+    draft: z.boolean().default(true),
+  }),
+});
+
+export const collections = { services, areas };

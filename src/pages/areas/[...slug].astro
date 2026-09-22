@@ -1,0 +1,116 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaCard from '../../components/CtaCard.astro';
+import Faq from '../../components/Faq.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../config/site';
+
+export async function getStaticPaths() {
+  const areas = await getCollection('areas');
+  return areas.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'areas'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const others = (await getCollection('areas'))
+  .filter((a) => a.id !== entry.id)
+  .sort((a, b) => a.data.city.localeCompare(b.data.city, 'he'));
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'דף הבית', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'אזורי שירות', item: `${site.url}/areas` },
+      { '@type': 'ListItem', position: 3, name: data.city, item: `${site.url}/areas/${entry.id}` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FinancialService',
+    name: `${site.name} - ${data.city}`,
+    url: `${site.url}/areas/${entry.id}`,
+    areaServed: { '@type': 'City', name: data.city },
+    parentOrganization: { '@type': 'Organization', name: site.name, url: site.url },
+  },
+];
+
+if (data.faqs.length > 0) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: data.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+
+<BaseLayout title={data.title} description={data.description} draft={data.draft} schema={schema}>
+  <nav aria-label="פירורי לחם" class="border-b border-ink/10 bg-surface">
+    <ol class="container-site flex gap-2 py-3 text-sm text-ink-soft">
+      <li><a href="/">דף הבית</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/areas">אזורי שירות</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">{data.city}</li>
+    </ol>
+  </nav>
+
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// AREA</p>
+      <h1 class="mt-3 max-w-3xl text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">{data.heading}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">{data.summary}</p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      <div class="prose-mz"><Content /></div>
+
+      <section aria-labelledby="area-services" class="mt-12">
+        <h2 id="area-services" class="text-2xl font-bold">{`מה אפשר לבדוק, גם ב${data.city}`}</h2>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          {services.map((s) => (
+            <li>
+              <a href={`/services/${s.id}`} class="flex items-center justify-between gap-2 rounded-[10px] border border-ink/12 bg-surface p-4 font-bold text-ink no-underline hover:border-line">
+                {s.data.heading}
+                <span class="text-line"><Icon name="arrow-left" size={18} /></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <Faq items={data.faqs} />
+    </div>
+
+    <div class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <CtaCard title={`מתאימים לכם ב${data.city}?`} text="שיחת היכרות קצרה, בלי התחייבות, ואחריה תדעו מה האפשרויות." />
+      <nav aria-labelledby="other-areas" class="rounded-[16px] border border-ink/12 bg-surface p-6">
+        <h2 id="other-areas" class="mono-tag">// OTHER AREAS</h2>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {others.map((a) => (
+            <li>
+              <a href={`/areas/${a.id}`} class="inline-block rounded-full border border-ink/15 px-3 py-1.5 text-sm text-ink no-underline hover:border-line">
+                {a.data.city}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</BaseLayout>
