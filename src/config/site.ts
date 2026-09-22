@@ -5,6 +5,8 @@
  */
 export interface SiteConfig {
   name: string;
+  /** Owner's full name, used on about, legal pages and schema. */
+  ownerName: string;
   tagline: string;
   /** Production URL, no trailing slash. Keep in sync with astro.config.mjs. */
   url: string;
@@ -31,6 +33,13 @@ export interface SiteConfig {
   /** Public booking page (Google Calendar appointment schedule). */
   bookingUrl: string | null;
   foundedYear: number | null;
+  /** Opening hours for replies, free text. */
+  businessHours: string | null;
+  /** Product facts the owner supplied and can change without touching content. */
+  facts: {
+    /** Minimum age most lenders require for a reverse mortgage (owner-provided, pending verification). */
+    reverseMortgageMinAge: number;
+  };
   /** Year the owner started working as an economist (confirmed by the owner). */
   economistSince: number;
   social: {
@@ -43,6 +52,7 @@ export interface SiteConfig {
 
 export const site: SiteConfig = {
   name: 'משכנתאות ציון',
+  ownerName: 'ציון סיגרון',
   tagline: 'ייעוץ משכנתאות, מחזור משכנתא ואיחוד הלוואות',
   url: 'https://example.com',
   locale: 'he_IL',
@@ -53,10 +63,14 @@ export const site: SiteConfig = {
   },
   address: null,
   googleBusinessUrl: null,
-  businessId: null,
+  businessId: '068422138',
   licenseNumber: null,
   bookingUrl: null,
   foundedYear: null,
+  businessHours: 'ימים א-ה, 9:00-18:00',
+  facts: {
+    reverseMortgageMinAge: 65,
+  },
   economistSince: 2007,
   social: {
     facebook: null,

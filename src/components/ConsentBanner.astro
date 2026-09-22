@@ -1,0 +1,73 @@
+---
+/**
+ * Cookie consent. Nothing beyond essential storage runs before a choice is made.
+ * The choice is kept in localStorage and broadcast as a "mz:consent" event.
+ */
+---
+
+<div
+  id="consent-banner"
+  class="fixed inset-x-0 bottom-0 z-50 hidden border-t-2 border-ink bg-surface p-4 shadow-[0_-10px_30px_-20px_#0b1f3a55] md:p-6"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="consent-title"
+  aria-describedby="consent-text"
+>
+  <div class="container-site flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <h2 id="consent-title" class="text-lg font-bold">עוגיות באתר</h2>
+      <p id="consent-text" class="mt-1 max-w-2xl text-ink-soft">
+        אנחנו משתמשים בעוגיות חיוניות לתפעול האתר, ובעוגיות מדידה ופרסום רק אם תאשרו. אפשר לשנות את הבחירה בכל עת.
+        פרטים ב<a href="/cookie-policy">מדיניות העוגיות</a>.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary !min-h-11" data-consent="all">אישור הכל</button>
+      <button type="button" class="btn btn-outline !min-h-11" data-consent="analytics">מדידה בלבד</button>
+      <button type="button" class="btn btn-outline !min-h-11" data-consent="none">דחייה</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'mz-consent';
+  const banner = document.getElementById('consent-banner');
+
+  const read = () => {
+    try {
+      return JSON.parse(localStorage.getItem(KEY) || 'null');
+    } catch {
+      return null;
+    }
+  };
+
+  const save = (consent: { analytics: boolean; marketing: boolean }) => {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ ...consent, at: new Date().toISOString() }));
+    } catch {
+      // Private mode or blocked storage: honour the choice for this page view only.
+    }
+    window.dispatchEvent(new CustomEvent('mz:consent', { detail: consent }));
+  };
+
+  if (banner) {
+    if (!read()) banner.classList.remove('hidden');
+
+    banner.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const choice = button.dataset.consent;
+        save({ analytics: choice !== 'none', marketing: choice === 'all' });
+        banner.classList.add('hidden');
+      });
+    });
+  }
+
+  // Lets the cookie policy page reopen the banner.
+  document.querySelectorAll('[data-open-consent]').forEach((el) =>
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      banner?.classList.remove('hidden');
+      banner?.querySelector<HTMLButtonElement>('[data-consent="all"]')?.focus();
+    }),
+  );
+</script>

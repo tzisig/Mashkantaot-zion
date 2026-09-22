@@ -28,7 +28,7 @@ const yearsAsEconomist = new Date().getFullYear() - site.economistSince;
     <div>
       <div class="prose-mz">
         <p>
-          שמי <Missing what="שם מלא" />, ואני כלכלן מאז {site.economistSince}. את רוב השנים האלה עשיתי עם מספרים של
+          שמי {site.ownerName}, ואני כלכלן מאז {site.economistSince}. את רוב השנים האלה עשיתי עם מספרים של
           אחרים: תקציבים, תזרימים, החלטות שנראות קטנות על הנייר ועולות הרבה בפועל. בשלב מסוים הבנתי שהמקום שבו הפער
           בין ידע לבין כסף הוא הכי גדול אצל משפחות רגילות הוא בדיוק המשכנתא.
         </p>
@@ -80,7 +80,7 @@ const yearsAsEconomist = new Date().getFullYear() - site.economistSince;
           </div>
           <div>
             <dt class="text-sm text-ink-soft">מספר עוסק</dt>
-            <dd class="text-lg font-bold">{site.businessId ?? <Missing what="מספר עוסק" />}</dd>
+            <dd class="text-lg font-bold tabular-nums" dir="ltr">{site.businessId ?? <Missing what="מספר עוסק" />}</dd>
           </div>
         </dl>
       </section>

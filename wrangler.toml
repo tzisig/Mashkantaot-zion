@@ -1,0 +1,8 @@
+name = "mashkantot-zion"
+compatibility_date = "2026-09-01"
+# nodejs_compat is required by the SMTP client used in functions/api/contact.ts
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+# Secrets (TURNSTILE_SECRET, SMTP_*, MAIL_TO, SHEETS_WEBHOOK_*) are set in the
+# Cloudflare dashboard or with `wrangler pages secret put`, never in this file.

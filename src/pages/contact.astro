@@ -5,6 +5,8 @@ import Missing from '../components/Missing.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../config/site';
 
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? null;
+
 const subjects = [
   'מחזור משכנתא',
   'איחוד הלוואות',
@@ -108,8 +110,12 @@ const subjects = [
           <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
         </div>
 
-        <!-- TODO: Cloudflare Turnstile widget mounts here before launch. -->
-        <div data-turnstile></div>
+        {turnstileSiteKey && (
+          <>
+            <div class="cf-turnstile mt-6" data-sitekey={turnstileSiteKey} data-language="he"></div>
+            <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+          </>
+        )}
 
         <button type="submit" class="btn btn-primary mt-6 w-full sm:w-auto">שליחה</button>
         <p class="mt-4 text-sm" data-form-status role="status" aria-live="polite"></p>
@@ -134,7 +140,7 @@ const subjects = [
           </li>
           <li class="flex items-center gap-2">
             <Icon name="clock" size={20} />
-            שעות מענה: <Missing what="שעות פעילות" />
+            שעות מענה: {site.businessHours ?? <Missing what="שעות פעילות" />}
           </li>
         </ul>
         <p class="mt-4 text-sm text-muted">שירות בכל הארץ. פגישות פרונטליות, בזום או בטלפון.</p>

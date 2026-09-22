@@ -19,6 +19,8 @@ const services = defineCollection({
     icon: z.string(),
     summary: z.string(),
     faqs: z.array(faq).default([]),
+    /** Key figures shown in a box. A value of "config:<path>" is resolved from src/config/site.ts. */
+    facts: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
     sources: z.array(source).default([]),
     updated: z.date(),
     /** Draft copy awaiting owner approval - shows a badge in dev only. */

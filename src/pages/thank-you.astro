@@ -30,8 +30,9 @@ import ContactButtons from '../components/ContactButtons.astro';
   </section>
 
   <script>
-    // GA4 key event. The analytics layer is wired in a later step.
+    // GA4 key event. Consent Mode decides whether it reaches Google.
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'generate_lead' });
+    if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead');
   </script>
 </BaseLayout>

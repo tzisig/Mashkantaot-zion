@@ -5,6 +5,8 @@ import Seo, { type SeoProps } from '../components/Seo.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileActionBar from '../components/MobileActionBar.astro';
+import Analytics from '../components/Analytics.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 interface Props extends SeoProps {
   /** Draft copy awaiting owner approval. Shows a badge in dev only. */
@@ -25,6 +27,7 @@ const showDraft = draft && import.meta.env.DEV;
     <link rel="preload" href={rubikHebrew} as="font" type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <Seo {...seo} />
+    <Analytics />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
@@ -40,6 +43,7 @@ const showDraft = draft && import.meta.env.DEV;
     </main>
     <Footer />
     <MobileActionBar />
+    <ConsentBanner />
 
     <script>
       // One-time reveal on scroll. CSS keeps content visible when JS or motion is off.

@@ -48,6 +48,15 @@ const breadcrumbs = {
 };
 
 const updated = data.updated.toLocaleDateString('he-IL', { year: 'numeric', month: 'long' });
+
+/** Resolves "config:a.b" values against the site config, so figures live in one place. */
+const resolveFact = (value: string) => {
+  if (!value.startsWith('config:')) return value;
+  const path = value.slice('config:'.length).split('.');
+  let current: unknown = site;
+  for (const key of path) current = (current as Record<string, unknown>)?.[key];
+  return String(current ?? '');
+};
 ---
 
 <BaseLayout
@@ -78,6 +87,17 @@ const updated = data.updated.toLocaleDateString('he-IL', { year: 'numeric', mont
     <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
       <div>
         <div class="prose-mz"><Content /></div>
+
+        {data.facts.length > 0 && (
+          <dl class="mt-10 grid gap-4 sm:grid-cols-2">
+            {data.facts.map((f) => (
+              <div class="sheet p-5">
+                <dt class="text-sm text-ink-soft">{f.label}</dt>
+                <dd class="mt-1 text-3xl font-extrabold tabular-nums">{resolveFact(f.value)}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
 
         <Faq items={data.faqs} />
 
