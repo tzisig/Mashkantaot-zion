@@ -37,9 +37,16 @@ const wa = whatsappLink();
     <div>
       <h2 class="mono-tag !text-highlight mb-3">// CONTACT</h2>
       <ul class="space-y-2 text-white/90">
-        <li>טלפון: {tel ? <a class="text-white" href={tel}>{site.contact.phone}</a> : <Missing what="טלפון" />}</li>
-        <li>וואטסאפ: {wa ? <a class="text-white" href={wa}>שליחת הודעה</a> : <Missing what="מספר וואטסאפ" />}</li>
-        <li>מייל: {site.contact.email ? <a class="text-white" href={`mailto:${site.contact.email}`}>{site.contact.email}</a> : <Missing what="מייל" />}</li>
+        <li>
+          וואטסאפ: {wa ? <a class="text-white" href={wa} target="_blank" rel="noopener" data-track="whatsapp_click">שליחת הודעה</a> : <Missing what="מספר וואטסאפ" />}
+        </li>
+        <li>
+          טלפון: {tel ? <a class="text-white tabular-nums" href={tel} data-track="phone_click" dir="ltr">{site.contact.phone}</a> : <Missing what="טלפון" />}
+        </li>
+        <li>
+          מייל: {site.contact.email ? <a class="text-white" href={`mailto:${site.contact.email}`} data-track="email_click" dir="ltr">{site.contact.email}</a> : <Missing what="מייל" />}
+        </li>
+        <li>{site.businessHours ?? <Missing what="שעות פעילות" />}</li>
       </ul>
     </div>
   </div>

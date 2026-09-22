@@ -57,9 +57,9 @@ export const site: SiteConfig = {
   url: 'https://example.com',
   locale: 'he_IL',
   contact: {
-    phone: null,
-    whatsapp: null,
-    email: null,
+    phone: '058-443-3181',
+    whatsapp: '972584433181',
+    email: 'info@zionmortgages.com',
   },
   address: null,
   googleBusinessUrl: null,
