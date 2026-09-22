@@ -8,7 +8,7 @@ export interface SiteConfig {
   /** Owner's full name, used on about, legal pages and schema. */
   ownerName: string;
   tagline: string;
-  /** Production URL, no trailing slash. Keep in sync with astro.config.mjs. */
+  /** Production URL, no trailing slash. astro.config.ts and robots.txt read it from here. */
   url: string;
   locale: string;
   contact: {
@@ -54,12 +54,12 @@ export const site: SiteConfig = {
   name: 'משכנתאות ציון',
   ownerName: 'ציון סיגרון',
   tagline: 'ייעוץ משכנתאות, מחזור משכנתא ואיחוד הלוואות',
-  url: 'https://example.com',
+  url: 'https://mashkantaotzion.co.il',
   locale: 'he_IL',
   contact: {
     phone: '058-443-3181',
     whatsapp: '972584433181',
-    email: 'info@zionmortgages.com',
+    email: 'info@mashkantaotzion.co.il',
   },
   address: null,
   googleBusinessUrl: null,

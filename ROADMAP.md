@@ -11,7 +11,7 @@ Agreed order of work (2026-09-22). Done in this order unless the owner says othe
 
 ## Blocked on the owner
 
-- Domain purchase -> business email -> SMTP credentials
+- Domain purchase: mashkantaotzion.co.il (found free 2026-09-22, not yet registered) -> business email -> SMTP credentials
 - Phone number and WhatsApp number
 - Cloudflare Pages, GA4, Turnstile and Google Sheets accounts
 - Lawyer review of `LEGAL-CHECKLIST.md`

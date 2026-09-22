@@ -2,12 +2,11 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { site } from './src/config/site';
 
-// TODO: replace with the real domain once purchased (see src/config/site.ts).
-const SITE_URL = 'https://example.com';
-
+// The domain lives in src/config/site.ts only - this file follows it.
 export default defineConfig({
-  site: SITE_URL,
+  site: site.url,
   trailingSlash: 'never',
   build: { format: 'file' },
   integrations: [

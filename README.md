@@ -39,7 +39,7 @@ is installed as the WASI fallback for Astro's markdown pipeline. Keep it.
 ## Before launch
 
 1. Fill in `src/config/site.ts` (domain, phone, WhatsApp, email, booking URL).
-2. Set the real domain in `astro.config.mjs` and `public/robots.txt`.
+2. The domain is set once, in `src/config/site.ts`; `astro.config.ts`, the sitemap and `robots.txt` all read it from there.
 3. Add the measurement IDs in `src/config/analytics.ts`.
 4. Create the Cloudflare Pages project, set the variables from `.env.example`,
    and deploy the Apps Script from `scripts/sheets-webhook.gs`.
