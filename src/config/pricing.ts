@@ -26,7 +26,14 @@ export interface PricingTier {
 export interface PricingConfig {
   tiers: PricingTier[];
   /**
-   * VAT wording, e.g. 'המחירים אינם כוללים מע"מ'.
+   * VAT wording under the price cards.
+   *
+   * The figures in `from` must already be the total the client pays: under the
+   * Consumer Protection Law (ss. 17b(a)-(b)) a price shown to a consumer has to
+   * include VAT, and labelling a net figure "לא כולל מע״מ" does not cure it.
+   * So this line only states which case applies, e.g. 'המחירים כוללים מע״מ' or
+   * 'עוסק פטור, המחירים סופיים'.
+   *
    * Null until the owner confirms his VAT status; renders [חסר: ...] meanwhile.
    */
   vatNote: string | null;
@@ -83,7 +90,9 @@ export const pricing: PricingConfig = {
       note: 'המחיר נקבע אחרי שיחת ההיכרות, לפי מה שהתיק באמת דורש.',
     },
   ],
-  vatNote: null,
+  // Owner's decision (2026-09-23): keep the net figures and state that VAT is
+  // added. Flagged for the lawyer as item 9 in LEGAL-CHECKLIST.md.
+  vatNote: 'המחירים אינם כוללים מע״מ.',
 };
 
 /** "מ-5,000 ₪" / "500 ₪" / "ללא עלות" */

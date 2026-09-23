@@ -12,5 +12,6 @@ Everything here must be reviewed by a lawyer before the site goes live. If the s
 | 6 | Savings / results claims | Regulated field. Every claim about savings, rates or outcomes is flagged in content for review | Open |
 | 7 | Marketing consent (Communications Law 30A) | Only if a newsletter is added - separate, unchecked checkbox | N/A for now |
 | 8 | Reverse mortgage content | Aimed at seniors; wording on risks and costs must be balanced | Open |
+| 9 | Price display on `/pricing` | Consumer Protection Law ss. 17b(a)-(b): the price shown to a consumer must be the total including VAT, and a net figure labelled "לא כולל מע\"מ" is a breach (Herzog). Case law found covers goods; whether it extends to services was not established here. Owner is an עוסק מורשה and chose on 2026-09-23 to publish net figures with "אינם כוללים מע\"מ" | **Owner informed, lawyer to decide** |
 
 Source research: `research/competitors.md` (regulation section), `research/keyword-map.md`.
