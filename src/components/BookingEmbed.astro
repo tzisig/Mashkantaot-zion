@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+
+/**
+ * Google Calendar appointment schedule.
+ * The iframe is only inserted after a click, so a third-party frame never
+ * blocks the first render. Without a configured URL the component renders
+ * nothing and the page falls back to its other contact options.
+ */
+const url = site.bookingUrl;
+const embedUrl = url ? `${url}${url.includes('?') ? '&' : '?'}gv=true` : null;
+---
+
+{embedUrl && (
+  <div class="sheet overflow-hidden" data-booking>
+    <div class="flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="mono-tag">// BOOKING</p>
+        <h2 class="mt-2 text-xl font-bold">בחרו מועד שנוח לכם</h2>
+        <p class="mt-1 text-ink-soft">הזמנים שמוצגים הם הזמנים הפנויים ביומן שלנו.</p>
+      </div>
+      <button type="button" class="btn btn-primary" data-booking-open data-track="book_meeting_click">
+        <Icon name="calendar" size={20} /> פתיחת היומן
+      </button>
+    </div>
+
+    <template data-booking-frame>
+      <iframe
+        src={embedUrl}
+        title="קביעת פגישה ביומן"
+        width="100%"
+        height="620"
+        frameborder="0"
+        loading="lazy"
+        style="border:0"
+      ></iframe>
+    </template>
+
+    <p class="border-t border-ink/10 p-4 text-sm text-muted">
+      לא נפתח? אפשר <a href={url} target="_blank" rel="noopener" data-track="book_meeting_click">לפתוח את היומן בלשונית חדשה</a>.
+    </p>
+  </div>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-booking]').forEach((box) => {
+    const button = box.querySelector<HTMLButtonElement>('[data-booking-open]');
+    const frame = box.querySelector<HTMLTemplateElement>('[data-booking-frame]');
+    button?.addEventListener('click', () => {
+      if (!frame) return;
+      button.parentElement?.parentElement?.insertBefore(frame.content.cloneNode(true), frame);
+      button.remove();
+    });
+  });
+</script>

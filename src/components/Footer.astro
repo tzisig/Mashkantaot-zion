@@ -30,6 +30,9 @@ const wa = whatsappLink();
       <h2 class="mono-tag !text-highlight mb-3">// SITE</h2>
       <ul class="space-y-2">
         {mainNav.map((i) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={i.href}>{i.label}</a></li>)}
+        {site.bookingUrl && (
+          <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/book">קביעת פגישה</a></li>
+        )}
         <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/areas">אזורי שירות</a></li>
         <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/documents">העברת מסמכים</a></li>
       </ul>

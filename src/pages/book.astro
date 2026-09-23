@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingEmbed from '../components/BookingEmbed.astro';
+import ContactButtons from '../components/ContactButtons.astro';
+import Missing from '../components/Missing.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../config/site';
+
+const faqs = [
+  {
+    q: 'הפגישה עולה כסף?',
+    a: 'שיחת ההיכרות היא בלי תשלום ובלי התחייבות. אם אחריה נראה שיש מה לעשות, תקבלו הצעת מחיר בכתב לפני שמתחילים.',
+  },
+  {
+    q: 'כמה זמן היא נמשכת?',
+    a: 'בדרך כלל כרבע שעה עד חצי שעה, תלוי בכמה נתונים יש. אם צריך יותר, נקבע המשך.',
+  },
+  {
+    q: 'מה כדאי להכין מראש?',
+    a: 'שום דבר מחייב. אם יש בהישג יד את יתרת המשכנתא או פירוט ההלוואות, זה יקצר את הדרך, אבל אפשר גם בלי.',
+  },
+  {
+    q: 'הפגישה פרונטלית או מרחוק?',
+    a: 'כפי שנוח לכם. אנחנו עובדים עם לקוחות בכל הארץ, ורוב התהליך מתנהל ממילא בשיחות ובמסמכים.',
+  },
+];
+---
+
+<BaseLayout
+  title="קביעת פגישה"
+  description="בחרו מועד לשיחת היכרות בלי התחייבות: בוחרים זמן פנוי ביומן ומקבלים אישור למייל. אפשר גם בוואטסאפ או בטלפון."
+  draft
+  schema={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// BOOKING</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">קביעת <span class="marker">פגישה</span></h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        שיחת היכרות קצרה, בלי תשלום ובלי התחייבות. בוחרים זמן שנוח לכם, ומקבלים אישור למייל.
+      </p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div class="space-y-8">
+      {site.bookingUrl ? (
+        <BookingEmbed />
+      ) : (
+        <div class="rounded-[16px] border-2 border-dashed border-ink/25 p-6">
+          <p class="mono-tag">// BOOKING</p>
+          <p class="mt-2 text-ink-soft">
+            היומן עדיין לא חובר: <Missing what="קישור ליומן הפגישות (Google Calendar)" />
+          </p>
+          <p class="mt-3 text-ink-soft">בינתיים אפשר לתאם פגישה בוואטסאפ או בטלפון, וזה לוקח פחות מדקה.</p>
+          <div class="mt-5"><ContactButtons message="היי, אשמח לקבוע שיחת היכרות" /></div>
+        </div>
+      )}
+
+      <div class="prose-mz">
+        <h2>מה קורה בשיחה</h2>
+        <p>
+          מבינים איפה אתם עומדים: משכנתא קיימת, הלוואות, נכס או עסקה מתוכננת. אחר כך אומרים לכם בכנות אם יש מה
+          לעשות ומה הצעד הבא. אם אין, נגיד את זה ולא ייגבה תשלום.
+        </p>
+        <p>
+          אין צורך להביא מסמכים לשיחה הראשונה. אם בהמשך נצטרך אותם, יש
+          <a href="/documents"> דרך מסודרת להעביר אותם</a>, ולא דרך האתר.
+        </p>
+      </div>
+
+      <Faq items={faqs} />
+    </div>
+
+    <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div class="sheet p-6">
+        <p class="mono-tag">// FASTER</p>
+        <h2 class="mt-2 text-xl font-bold">מעדיפים בלי יומן?</h2>
+        <p class="mt-2 text-ink-soft">שלחו הודעה ונתאם מועד יחד.</p>
+        <div class="mt-5 [&_.btn]:w-full">
+          <ContactButtons layout="stack" message="היי, אשמח לקבוע שיחת היכרות" />
+        </div>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

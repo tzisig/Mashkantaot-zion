@@ -1,9 +1,11 @@
+import { site } from '../config/site';
+
 export interface NavItem {
   label: string;
   href: string;
 }
 
-export const mainNav: NavItem[] = [
+const baseNav: NavItem[] = [
   { label: 'שירותים', href: '/services' },
   { label: 'מחשבון משכנתא', href: '/mortgage-calculator' },
   { label: 'מחירים', href: '/pricing' },
@@ -11,6 +13,11 @@ export const mainNav: NavItem[] = [
   { label: 'שאלות נפוצות', href: '/faq' },
   { label: 'צור קשר', href: '/contact' },
 ];
+
+/** The booking page only appears once site.bookingUrl is set. */
+export const mainNav: NavItem[] = site.bookingUrl
+  ? [...baseNav.slice(0, 3), { label: 'קביעת פגישה', href: '/book' }, ...baseNav.slice(3)]
+  : baseNav;
 
 export const legalNav: NavItem[] = [
   { label: 'מדיניות פרטיות', href: '/privacy-policy' },
