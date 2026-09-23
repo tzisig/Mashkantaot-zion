@@ -67,14 +67,14 @@ def icon_paths() -> tuple[str, str]:
     return navy, coral, int(box.group(1)), int(box.group(2))
 
 
-def build(stacked: bool, on_dark: bool) -> str:
+def build(stacked: bool, on_dark: bool, tagline: bool = True) -> str:
     navy_d, coral_d, icon_w, icon_h = icon_paths()
     ink = WHITE if on_dark else NAVY
     bold = load_font(900)
     regular = load_font(400)
 
     brand_size = 96
-    tagline_size = 40
+    tagline_size = 50
     gap = 34
 
     brand_d, brand_w = text_path(bold, BRAND, brand_size, 0, 0)
@@ -86,7 +86,7 @@ def build(stacked: bool, on_dark: bool) -> str:
         icon_scale = 320 / icon_w
         ih = icon_h * icon_scale
         width = max(word_w, 320) + 80
-        height = ih + 190
+        height = ih + (190 if tagline else 140)
         cx = width / 2
         body = (
             f'<g transform="translate({cx - 160:.1f} 20) scale({icon_scale:.4f})">'
@@ -94,16 +94,19 @@ def build(stacked: bool, on_dark: bool) -> str:
             f'<path fill="{CORAL}" fill-rule="evenodd" d="{coral_d}"/></g>'
             f'<g fill="{ink}" transform="translate({cx + word_w / 2:.1f} {ih + 110:.1f})">{brand_d}</g>'
             f'<g fill="{CORAL}" transform="translate({cx + word_w / 2:.1f} {ih + 110:.1f})">{name_d}</g>'
-            f'<g fill="{ink}" transform="translate({cx + tag_w / 2:.1f} {ih + 160:.1f})">{tag_d}</g>'
-            f'<path stroke="{CORAL}" stroke-width="3" d="M{cx + tag_w / 2 + 16:.1f} {ih + 150:.1f}h34'
-            f'M{cx - tag_w / 2 - 50:.1f} {ih + 150:.1f}h34"/>'
+            + (
+                f'<g fill="{ink}" transform="translate({cx + tag_w / 2:.1f} {ih + 160:.1f})">{tag_d}</g>'
+                f'<path stroke="{CORAL}" stroke-width="3" d="M{cx + tag_w / 2 + 16:.1f} {ih + 150:.1f}h34'
+                f'M{cx - tag_w / 2 - 50:.1f} {ih + 150:.1f}h34"/>'
+                if tagline else ''
+            )
         )
     else:
         icon_scale = 150 / icon_h
         iw = icon_w * icon_scale
         width = word_w + iw + gap + 40
         rule_room = 50
-        height = 200
+        height = 200 if tagline else 150
         width += rule_room
         text_right = width - iw - gap - 20 - rule_room
         tag_right = text_right - (word_w - tag_w) / 2
@@ -114,9 +117,12 @@ def build(stacked: bool, on_dark: bool) -> str:
             f'<g fill="{ink}" transform="translate({text_right:.1f} 108)">{brand_d}</g>'
             f'<g fill="{CORAL}" transform="translate({text_right:.1f} 108)">{name_d}</g>'
             # the tagline is centred under the wordmark, not aligned to its edge
-            f'<g fill="{ink}" transform="translate({tag_right:.1f} 158)">{tag_d}</g>'
-            f'<path stroke="{CORAL}" stroke-width="3" d="M{tag_right - tag_w - 50:.1f} 148h34'
-            f'M{tag_right + 16:.1f} 148h34"/>'
+            + (
+                f'<g fill="{ink}" transform="translate({tag_right:.1f} 158)">{tag_d}</g>'
+                f'<path stroke="{CORAL}" stroke-width="3" d="M{tag_right - tag_w - 50:.1f} 148h34'
+                f'M{tag_right + 16:.1f} 148h34"/>'
+                if tagline else ''
+            )
         )
 
     return (
@@ -132,6 +138,11 @@ def main() -> None:
         'logo-horizontal-onDark.svg': build(stacked=False, on_dark=True),
         'logo-stacked.svg': build(stacked=True, on_dark=False),
         'logo-stacked-onDark.svg': build(stacked=True, on_dark=True),
+        # Small sizes: the tagline would be unreadable, so it is dropped.
+        'logo-horizontal-notag.svg': build(stacked=False, on_dark=False, tagline=False),
+        'logo-horizontal-notag-onDark.svg': build(stacked=False, on_dark=True, tagline=False),
+        'logo-stacked-notag.svg': build(stacked=True, on_dark=False, tagline=False),
+        'logo-stacked-notag-onDark.svg': build(stacked=True, on_dark=True, tagline=False),
     }
     for name, svg in files.items():
         path = OUT / name

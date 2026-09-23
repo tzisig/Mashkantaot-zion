@@ -6,15 +6,16 @@ interface Props {
   onDark?: boolean;
   /** Stacked lockup instead of the horizontal one. */
   stacked?: boolean;
+  /** Drop the tagline - it is unreadable below roughly 56px of lockup height. */
+  noTagline?: boolean;
   class?: string;
 }
 
-const { onDark = false, stacked = false, class: className } = Astro.props;
-const lockup = stacked ? 'logo-stacked' : 'logo-horizontal';
-const src = `/brand/${lockup}${onDark ? '-onDark' : ''}.svg`;
+const { onDark = false, stacked = false, noTagline = false, class: className } = Astro.props;
+const src = `/brand/logo-${stacked ? 'stacked' : 'horizontal'}${noTagline ? '-notag' : ''}${onDark ? '-onDark' : ''}.svg`;
 const size = stacked
-  ? { width: 210, height: 250, cls: 'h-28 w-auto' }
-  : { width: 220, height: 46, cls: 'h-10 w-auto md:h-11' };
+  ? { width: 210, height: noTagline ? 190 : 250, cls: 'h-32 w-auto' }
+  : { width: 220, height: noTagline ? 34 : 46, cls: noTagline ? 'h-9 w-auto md:h-10' : 'h-12 w-auto md:h-14' };
 ---
 
 <a href="/" class={`inline-flex items-center no-underline ${className ?? ''}`} aria-label={`${site.name} - דף הבית`}>
