@@ -5,7 +5,7 @@ import Missing from '../components/Missing.astro';
 import Icon from '../components/Icon.astro';
 import { site, phoneLink, whatsappLink } from '../config/site';
 
-const wa = whatsappLink('היי, הגעתי מהאתר ואשמח לבדוק את המשכנתא שלי');
+const wa = whatsappLink('היי, הגעתי מהאתר ואשמח לבדוק אפשרות למשכנתא');
 const tel = phoneLink();
 
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? null;
@@ -14,7 +14,7 @@ const subjects = [
   'מחזור משכנתא',
   'איחוד הלוואות',
   'משכנתא לרכישת דירה',
-  'הבנק סירב לי',
+  'הבנק סירב לנו',
   'הלוואה חוץ בנקאית',
   'משכנתא לכל מטרה',
   'משכנתא הפוכה',
@@ -24,7 +24,7 @@ const subjects = [
 
 <BaseLayout
   title="צרו קשר"
-  description="שיחת היכרות קצרה בלי התחייבות: בוואטסאפ, בטלפון או בטופס. משאירים פרטים ואני חוזר אליכם בערוץ שנוח לכם."
+  description="שיחת היכרות קצרה בלי התחייבות: בוואטסאפ, בטלפון או בטופס. משאירים פרטים ואנחנו חוזרים אליכם בערוץ שנוח לכם."
   draft
 >
   <header class="blueprint border-b-2 border-ink">
@@ -32,7 +32,7 @@ const subjects = [
       <p class="mono-tag">// CONTACT</p>
       <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">בואו <span class="marker">נדבר</span></h1>
       <p class="mt-4 max-w-2xl text-lg text-ink-soft">
-        הדרך המהירה ביותר היא וואטסאפ. אפשר גם טלפון או טופס, ואחזור אליכם בערוץ שתבחרו.
+        הדרך המהירה ביותר היא וואטסאפ. אפשר גם טלפון או טופס, ונחזור אליכם בערוץ שתבחרו.
       </p>
       <div class="mt-6"><ContactButtons showPlaceholders /></div>
     </div>
@@ -42,7 +42,7 @@ const subjects = [
     <div>
       <h2 class="text-2xl font-bold">השארת פרטים</h2>
       <p class="mt-2 text-ink-soft">
-        הפרטים שתמלאו משמשים אותי כדי לחזור אליכם בלבד. אין צורך לצרף מסמכים בשלב הזה, ואי אפשר להעלות אותם כאן.
+        הפרטים שתמלאו משמשים אותנו כדי לחזור אליכם בלבד. אין צורך לצרף מסמכים בשלב הזה, ואי אפשר להעלות אותם כאן.
       </p>
 
       <form class="sheet mt-6 p-6" data-contact-form novalidate>
@@ -84,7 +84,7 @@ const subjects = [
           </div>
 
           <fieldset class="sm:col-span-2">
-            <legend class="font-medium">איך נוח שאחזור אליכם?</legend>
+            <legend class="font-medium">איך נוח שנחזור אליכם?</legend>
             <div class="mt-2 flex flex-wrap gap-4">
               {['וואטסאפ', 'טלפון', 'מייל'].map((c, i) => (
                 <label class="flex items-center gap-2">
@@ -141,7 +141,7 @@ const subjects = [
                 <span class="grid size-10 shrink-0 place-items-center rounded-[10px] bg-coral text-white"><Icon name="message-circle" size={20} /></span>
                 <span>
                   <span class="block font-bold">שליחת הודעה בוואטסאפ</span>
-                  <span class="block text-sm text-ink-soft">הדרך המהירה ביותר לקבל ממני תשובה</span>
+                  <span class="block text-sm text-ink-soft">הדרך המהירה ביותר לקבל מאיתנו תשובה</span>
                 </span>
               </a>
             ) : (
@@ -157,7 +157,7 @@ const subjects = [
               >
                 <span class="grid size-10 shrink-0 place-items-center rounded-[10px] bg-ink text-white"><Icon name="phone" size={20} /></span>
                 <span>
-                  <span class="block font-bold">דברו איתי בטלפון</span>
+                  <span class="block font-bold">דברו איתנו בטלפון</span>
                   <span class="block text-sm text-ink-soft">שיחה קצרה, בלי התחייבות ובלי תשלום</span>
                 </span>
               </a>
