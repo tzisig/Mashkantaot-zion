@@ -1,0 +1,173 @@
+---
+/**
+ * The single lead form used by the contact page and by every landing page.
+ * `variant` is sent with the lead so results can be split per A/B test.
+ */
+interface Props {
+  variant?: string | null;
+  compact?: boolean;
+  subjects?: string[];
+  submitLabel?: string;
+}
+
+const defaultSubjects = [
+  'מחזור משכנתא',
+  'איחוד הלוואות',
+  'משכנתא לרכישת דירה',
+  'הבנק סירב לי',
+  'הלוואה חוץ בנקאית',
+  'משכנתא לכל מטרה',
+  'משכנתא הפוכה',
+  'אחר',
+];
+
+const {
+  variant = null,
+  compact = false,
+  subjects = defaultSubjects,
+  submitLabel = 'שליחה',
+} = Astro.props;
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? null;
+const field =
+  'mt-1 w-full rounded-lg border-2 border-ink/20 bg-paper px-3 py-2.5 focus:border-line';
+---
+
+<form class="sheet p-5 sm:p-6" data-contact-form novalidate>
+  {variant && <input type="hidden" name="variant" value={variant} />}
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <label for={`name-${variant ?? 'main'}`} class="block font-medium">שם מלא <span class="text-error" aria-hidden="true">*</span></label>
+      <input id={`name-${variant ?? 'main'}`} name="name" type="text" autocomplete="name" required class={field} />
+      <p class="mt-1 text-sm text-error" data-error-for="name" role="alert" hidden></p>
+    </div>
+
+    <div class={compact ? 'sm:col-span-2' : ''}>
+      <label for={`phone-${variant ?? 'main'}`} class="block font-medium">טלפון <span class="text-error" aria-hidden="true">*</span></label>
+      <input id={`phone-${variant ?? 'main'}`} name="phone" type="tel" inputmode="tel" autocomplete="tel" required dir="ltr" class={`${field} text-start`} />
+      <p class="mt-1 text-sm text-error" data-error-for="phone" role="alert" hidden></p>
+    </div>
+
+    {!compact && (
+      <div>
+        <label for={`email-${variant ?? 'main'}`} class="block font-medium">מייל</label>
+        <input id={`email-${variant ?? 'main'}`} name="email" type="email" autocomplete="email" dir="ltr" class={`${field} text-start`} />
+        <p class="mt-1 text-sm text-error" data-error-for="email" role="alert" hidden></p>
+      </div>
+    )}
+
+    <div class="sm:col-span-2">
+      <label for={`subject-${variant ?? 'main'}`} class="block font-medium">במה מדובר?</label>
+      <select id={`subject-${variant ?? 'main'}`} name="subject" class={field}>
+        {subjects.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </div>
+
+    {!compact && (
+      <div class="sm:col-span-2">
+        <label for={`message-${variant ?? 'main'}`} class="block font-medium">כמה מילים על המצב</label>
+        <textarea id={`message-${variant ?? 'main'}`} name="message" rows="5" class={field}></textarea>
+        <p class="mt-1 text-sm text-muted">לא צריך לפרט מספרים רגישים כאן. את זה נעשה בשיחה.</p>
+      </div>
+    )}
+
+    {!compact && (
+      <fieldset class="sm:col-span-2">
+        <legend class="font-medium">איך נוח שנחזור אליכם?</legend>
+        <div class="mt-2 flex flex-wrap gap-4">
+          {['וואטסאפ', 'טלפון', 'מייל'].map((c, i) => (
+            <label class="flex items-center gap-2">
+              <input type="radio" name="channel" value={c} checked={i === 0} class="size-5 accent-line" />
+              {c}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    )}
+
+    <div class="sm:col-span-2">
+      <label class="flex items-start gap-3">
+        <input id={`consent-${variant ?? 'main'}`} name="consent" type="checkbox" required class="mt-1 size-5 accent-line" />
+        <span>
+          קראתי ואני מאשר/ת את <a href="/privacy-policy">מדיניות הפרטיות</a> ואת השימוש בפרטים שלי לצורך חזרה אליי.
+          <span class="text-error" aria-hidden="true">*</span>
+        </span>
+      </label>
+      <p class="mt-1 text-sm text-error" data-error-for="consent" role="alert" hidden></p>
+    </div>
+  </div>
+
+  <!-- Honeypot: hidden from people, tempting for bots. -->
+  <div class="absolute -start-[9999px]" aria-hidden="true">
+    <label for={`company-${variant ?? 'main'}`}>חברה</label>
+    <input id={`company-${variant ?? 'main'}`} name="company" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  {turnstileSiteKey && (
+    <>
+      <div class="cf-turnstile mt-6" data-sitekey={turnstileSiteKey} data-language="he"></div>
+      <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+    </>
+  )}
+
+  <button type="submit" class="btn btn-primary mt-6 w-full">{submitLabel}</button>
+  <p class="mt-4 text-sm" data-form-status role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const showError = (field: string, message: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+      if (!el) return;
+      el.textContent = message;
+      el.hidden = !message;
+      form.querySelector<HTMLInputElement>(`[name="${field}"]`)?.setAttribute('aria-invalid', message ? 'true' : 'false');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      let firstInvalid: string | null = null;
+
+      const checks: [string, boolean, string][] = [
+        ['name', String(data.get('name') ?? '').trim().length >= 2, 'נא למלא שם מלא'],
+        ['phone', /^[\d\-+() ]{9,15}$/.test(String(data.get('phone') ?? '').trim()), 'נא למלא מספר טלפון תקין'],
+        ['email', !data.get('email') || /.+@.+\..+/.test(String(data.get('email'))), 'כתובת המייל לא נראית תקינה'],
+        ['consent', data.get('consent') === 'on', 'צריך לאשר את מדיניות הפרטיות'],
+      ];
+
+      for (const [field, ok, message] of checks) {
+        showError(field, ok ? '' : message);
+        if (!ok && !firstInvalid) firstInvalid = field;
+      }
+
+      if (firstInvalid) {
+        form.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
+        status.textContent = 'לא נשלח: יש שדות שצריך לתקן.';
+        status.className = 'mt-4 text-sm text-error';
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      status.textContent = 'שולח...';
+      status.className = 'mt-4 text-sm text-ink-soft';
+
+      try {
+        const res = await fetch('/api/contact', { method: 'POST', body: data });
+        if (!res.ok) throw new Error(String(res.status));
+        const variant = String(data.get('variant') ?? '');
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'generate_lead', variant });
+        if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { variant });
+        window.location.href = variant ? `/thank-you?v=${encodeURIComponent(variant)}` : '/thank-you';
+      } catch {
+        button.disabled = false;
+        status.textContent = 'השליחה נכשלה. אפשר לנסות שוב, או לפנות בוואטסאפ.';
+        status.className = 'mt-4 text-sm text-error';
+      }
+    });
+  });
+</script>

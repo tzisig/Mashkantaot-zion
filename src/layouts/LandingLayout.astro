@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import rubikHebrew from '@fontsource-variable/rubik/files/rubik-hebrew-wght-normal.woff2?url';
+import Seo, { type SeoProps } from '../components/Seo.astro';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
+import Analytics from '../components/Analytics.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import { site, phoneLink, whatsappLink } from '../config/site';
+import { legalNav } from '../data/navigation';
+
+/**
+ * Campaign landing pages: no site navigation, one conversion goal, noindex.
+ * The variant id is attached to every click event so A/B results stay separable.
+ */
+interface Props extends SeoProps {
+  variant: string;
+  draft?: boolean;
+}
+
+const { variant, draft = false, ...seo } = Astro.props;
+const showDraft = draft && import.meta.env.DEV;
+const wa = whatsappLink('היי, הגעתי מקמפיין ואשמח לבדוק אפשרות למשכנתא');
+const tel = phoneLink();
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1f3a" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={rubikHebrew} as="font" type="font/woff2" crossorigin />
+    <Seo {...seo} noindex />
+    <Analytics />
+    <script is:inline define:vars={{ variant }}>
+      document.documentElement.classList.add('js');
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'lp_view', variant });
+    </script>
+  </head>
+  <body data-variant={variant}>
+    <a href="#main" class="sr-only z-50 rounded-[10px] bg-ink px-4 py-3 text-white focus:not-sr-only focus:fixed focus:start-4 focus:top-4">
+      דילוג לתוכן הראשי
+    </a>
+    {showDraft && (
+      <div class="bg-draft px-4 py-1.5 text-center text-sm text-ink">
+        טיוטה - דף נחיתה {variant}
+      </div>
+    )}
+
+    <header class="border-b-2 border-ink bg-paper">
+      <div class="container-site flex h-[68px] items-center justify-between gap-4">
+        <Logo />
+        {wa && (
+          <a href={wa} class="btn btn-primary !min-h-11 !px-4 text-sm" target="_blank" rel="noopener" data-track="whatsapp_click">
+            <Icon name="message-circle" size={18} /> וואטסאפ
+          </a>
+        )}
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1" class="pb-16 md:pb-0">
+      <slot />
+    </main>
+
+    <footer class="border-t-2 border-ink bg-ink text-white">
+      <div class="container-site flex flex-col gap-3 py-8 text-sm text-white/75 md:flex-row md:items-center md:justify-between">
+        <p>© {year} {site.name}. המידע בדף זה כללי ואינו מהווה ייעוץ או הצעה.</p>
+        <nav aria-label="מידע משפטי">
+          <ul class="flex flex-wrap gap-x-5 gap-y-2">
+            {legalNav.map((i) => <li><a class="text-white/80 hover:text-white" href={i.href}>{i.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </footer>
+
+    {(wa || tel) && (
+      <div class="fixed inset-x-0 bottom-0 z-40 grid border-t-2 border-ink bg-surface md:hidden" style={`grid-template-columns: ${tel && wa ? '1.4fr 1fr' : '1fr'}`}>
+        {wa && (
+          <a href={wa} class="flex min-h-14 items-center justify-center gap-2 bg-coral font-bold text-white no-underline" data-track="whatsapp_click" target="_blank" rel="noopener">
+            <Icon name="message-circle" /> וואטסאפ
+          </a>
+        )}
+        {tel && (
+          <a href={tel} class="flex min-h-14 items-center justify-center gap-2 font-bold text-ink no-underline" data-track="phone_click">
+            <Icon name="phone" /> להתקשר
+          </a>
+        )}
+      </div>
+    )}
+
+    <ConsentBanner />
+
+    <script>
+      // Every tracked click on a landing page carries its variant.
+      const variant = document.body.dataset.variant ?? '';
+      document.addEventListener('click', (e) => {
+        const el = e.target instanceof Element ? e.target.closest('[data-track]') : null;
+        if (!el) return;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: `${el.getAttribute('data-track')}_lp`, variant });
+      });
+    </script>
+  </body>
+</html>

@@ -46,4 +46,36 @@ const areas = defineCollection({
   }),
 });
 
-export const collections = { services, areas };
+const landing = defineCollection({
+  loader: glob({ base: './src/content/landing', pattern: '**/*.md' }),
+  schema: z.object({
+    /** Variant id sent with the lead and with the GA4 events, e.g. "lp-a". */
+    variant: z.string(),
+    /** Which A/B round this page belongs to. */
+    round: z.number().default(1),
+    /** What this page is testing, in one sentence. For the team, never shown. */
+    hypothesis: z.string(),
+    title: z.string(),
+    description: z.string().min(60).max(180),
+    /** Above-the-fold copy. */
+    eyebrow: z.string(),
+    headline: z.string(),
+    /** Word inside the headline to highlight with the marker style. */
+    marker: z.string().optional(),
+    subhead: z.string(),
+    bullets: z.array(z.string()).default([]),
+    ctaLabel: z.string().default('לשיחת היכרות'),
+    formHeading: z.string().default('השאירו פרטים'),
+    formNote: z.string().default('שיחה קצרה, בלי התחייבות ובלי תשלום.'),
+    /** Short form = name, phone and subject only. */
+    compactForm: z.boolean().default(false),
+    /** Show the mortgage calculator above the form. */
+    showCalculator: z.boolean().default(false),
+    steps: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+    faqs: z.array(faq).default([]),
+    updated: z.date(),
+    draft: z.boolean().default(true),
+  }),
+});
+
+export const collections = { services, areas, landing };
