@@ -74,7 +74,7 @@ def build(stacked: bool, on_dark: bool) -> str:
     regular = load_font(400)
 
     brand_size = 96
-    tagline_size = 34
+    tagline_size = 40
     gap = 34
 
     brand_d, brand_w = text_path(bold, BRAND, brand_size, 0, 0)
