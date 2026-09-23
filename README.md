@@ -25,6 +25,8 @@ is installed as the WASI fallback for Astro's markdown pipeline. Keep it.
 | `design-system/mashkantot-zion/MASTER.md` | The design system. Read it before changing styling. |
 | `research/` | Keyword research, competitor analysis and the keyword-to-page map. |
 | `LEGAL-CHECKLIST.md` | What a lawyer must approve before launch. |
+| `scripts/build_logo.py` | Rebuilds the logo lockups (emblem + outlined Rubik wordmark) into `public/brand/`. |
+| `design/og-template.html` | Source of `public/og-image.jpg`; screenshot it at 1200x630 after editing. |
 | `functions/api/contact.ts` | Contact form endpoint (Cloudflare Pages Function). |
 | `scripts/sheets-webhook.gs` | Apps Script that appends a lead to Google Sheets. |
 
