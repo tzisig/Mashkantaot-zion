@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480">
+  <title>משכנתאות ציון</title>
+  <desc>לוגו מוערם ליועץ משכנתאות</desc>
+  <rect width="600" height="480" fill="#FFFFFF"/>
+  <g transform="translate(150 38)">
+    <path d="M150 0 285 112H15Z" fill="#0B1F3A"/>
+    <path d="M42 105H258V245H42Z" fill="#0B1F3A"/>
+    <path d="M82 245V145H218V245" fill="#FFFFFF"/>
+    <path d="M104 245V166H196V245" fill="#C2410C"/>
+    <path d="M150 38V112" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M55 205 104 165 145 190 218 120" fill="none" stroke="#C2410C" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M188 120H218V150" fill="none" stroke="#C2410C" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="300" y="340" direction="rtl" unicode-bidi="bidi-override" text-anchor="middle" font-family="Arial, Noto Sans Hebrew, sans-serif" font-size="58" font-weight="700" fill="#0B1F3A">משכנתאות <tspan fill="#C2410C">ציון</tspan></text>
+  <path d="M120 365H480" stroke="#C2410C" stroke-width="3"/>
+  <text x="300" y="410" direction="rtl" unicode-bidi="bidi-override" text-anchor="middle" font-family="Arial, Noto Sans Hebrew, sans-serif" font-size="27" fill="#0B1F3A">הדרך הבטוחה לדירה שלך</text>
+</svg>
