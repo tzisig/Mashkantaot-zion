@@ -5,7 +5,7 @@ import CtaCard from '../../components/CtaCard.astro';
 import Icon from '../../components/Icon.astro';
 import Missing from '../../components/Missing.astro';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('guides')).sort(
   (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
 );
 const featured = posts.filter((p) => p.data.featured);
@@ -42,7 +42,7 @@ const fmt = (d: Date) => d.toLocaleDateString('he-IL', { year: 'numeric', month:
             <ul class="mb-8 grid gap-5">
               {featured.map((post) => (
                 <li>
-                  <a href={`/blog/${post.id}`} class="sheet block p-6 text-ink no-underline">
+                  <a href={`/guides/${post.id}`} class="sheet block p-6 text-ink no-underline">
                     <span class="mono-tag">// מומלץ</span>
                     <h2 class="mt-2 text-2xl font-bold">{post.data.heading ?? post.data.title}</h2>
                     <p class="mt-2 text-ink-soft">{post.data.description}</p>
@@ -58,7 +58,7 @@ const fmt = (d: Date) => d.toLocaleDateString('he-IL', { year: 'numeric', month:
           <ul class="grid gap-5 sm:grid-cols-2">
             {rest.map((post) => (
               <li>
-                <a href={`/blog/${post.id}`} class="group flex h-full flex-col gap-2 rounded-[16px] border border-ink/12 bg-surface p-6 text-ink no-underline transition-shadow hover:shadow-sheet">
+                <a href={`/guides/${post.id}`} class="group flex h-full flex-col gap-2 rounded-[16px] border border-ink/12 bg-surface p-6 text-ink no-underline transition-shadow hover:shadow-sheet">
                   <span class="mono-tag">{fmt(post.data.published)}</span>
                   <span class="text-xl font-bold">{post.data.heading ?? post.data.title}</span>
                   <span class="text-[0.95rem] text-ink-soft">{post.data.description}</span>

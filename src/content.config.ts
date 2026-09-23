@@ -78,8 +78,8 @@ const landing = defineCollection({
   }),
 });
 
-const blog = defineCollection({
-  loader: glob({ base: './src/content/blog', pattern: '**/*.md' }),
+const guides = defineCollection({
+  loader: glob({ base: './src/content/guides', pattern: '**/*.md' }),
   schema: z.object({
     title: z.string(),
     /** Page H1, when it should differ from the SEO title. */
@@ -99,4 +99,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { services, areas, landing, blog };
+export const collections = { services, areas, landing, guides };

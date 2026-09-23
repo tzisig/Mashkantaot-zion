@@ -20,7 +20,7 @@ is installed as the WASI fallback for Astro's markdown pipeline. Keep it.
 | `src/config/site.ts` | Business details. Anything left `null` renders a visible `[חסר: ...]` placeholder instead of fake data. |
 | `src/config/analytics.ts` | GA4 / Meta / TikTok IDs and the key-event names. Nothing loads while an ID is `null`. |
 | `src/content/services/*.md` | Service pages. Frontmatter carries keywords, FAQs and sources. |
-| `src/content/blog/*.md` | Guides. Frontmatter carries keywords, FAQs, sources and the service page each one supports. |
+| `src/content/guides/*.md` | Guides. Frontmatter carries keywords, FAQs, sources and the service page each one supports. |
 | `src/content/areas/*.md` | City pages. Each needs genuinely local content before launch. |
 | `src/pages/*` | Everything else, including the legal drafts. |
 | `design-system/mashkantot-zion/MASTER.md` | The design system. Read it before changing styling. |

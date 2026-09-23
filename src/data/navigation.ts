@@ -9,7 +9,7 @@ const baseNav: NavItem[] = [
   { label: 'שירותים', href: '/services' },
   { label: 'מחשבון משכנתא', href: '/mortgage-calculator' },
   { label: 'מחירים', href: '/pricing' },
-  { label: 'מדריכים', href: '/blog' },
+  { label: 'מדריכים', href: '/guides' },
   { label: 'אודות', href: '/about' },
   { label: 'שאלות נפוצות', href: '/faq' },
   { label: 'צור קשר', href: '/contact' },

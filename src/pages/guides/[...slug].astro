@@ -7,12 +7,12 @@ import Icon from '../../components/Icon.astro';
 import { site } from '../../config/site';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('guides');
   return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 interface Props {
-  entry: CollectionEntry<'blog'>;
+  entry: CollectionEntry<'guides'>;
 }
 
 const { entry } = Astro.props;
@@ -22,12 +22,12 @@ const d = entry.data;
 const services = await getCollection('services');
 const supported = d.supports ? services.find((s) => `/services/${s.id}` === d.supports) : undefined;
 
-const others = (await getCollection('blog'))
+const others = (await getCollection('guides'))
   .filter((p) => p.id !== entry.id)
   .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
   .slice(0, 3);
 
-const url = `${site.url}/blog/${entry.id}`;
+const url = `${site.url}/guides/${entry.id}`;
 const fmt = (date: Date) => date.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric' });
 // Hebrew reads at roughly 200 words a minute; the count comes from the raw markdown.
 const words = (entry.body ?? '').split(/\s+/).filter(Boolean).length;
@@ -51,7 +51,7 @@ const schema: Record<string, unknown>[] = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'דף הבית', item: `${site.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'מדריכים', item: `${site.url}/blog` },
+      { '@type': 'ListItem', position: 2, name: 'מדריכים', item: `${site.url}/guides` },
       { '@type': 'ListItem', position: 3, name: d.title, item: url },
     ],
   },
@@ -75,7 +75,7 @@ if (d.faqs.length > 0) {
     <ol class="container-site flex gap-2 py-3 text-sm text-ink-soft">
       <li><a href="/">דף הבית</a></li>
       <li aria-hidden="true">/</li>
-      <li><a href="/blog">מדריכים</a></li>
+      <li><a href="/guides">מדריכים</a></li>
       <li aria-hidden="true">/</li>
       <li aria-current="page" class="truncate">{d.heading ?? d.title}</li>
     </ol>
@@ -119,7 +119,7 @@ if (d.faqs.length > 0) {
             <ul class="mt-4 grid gap-3 sm:grid-cols-2">
               {others.map((post) => (
                 <li>
-                  <a href={`/blog/${post.id}`} class="flex items-center justify-between gap-2 rounded-[10px] border border-ink/12 bg-surface p-4 font-bold text-ink no-underline hover:border-line">
+                  <a href={`/guides/${post.id}`} class="flex items-center justify-between gap-2 rounded-[10px] border border-ink/12 bg-surface p-4 font-bold text-ink no-underline hover:border-line">
                     {post.data.heading ?? post.data.title}
                     <span class="text-line"><Icon name="arrow-left" size={18} /></span>
                   </a>
