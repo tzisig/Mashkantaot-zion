@@ -9,7 +9,7 @@ Agreed order of work (2026-09-22). Done in this order unless the owner says othe
 | 3 | Google Calendar booking integration | Done | `/book` page + lazy embed, live calendar connected |
 | 4 | Blog infrastructure (content collection) | Done | Archive + article template; topic plan in `research/blog-plan.md` |
 
-| 5 | Personalisation pass on the guides | Todo | Deliver a working doc: exactly what the owner replaces in each article so the writing is his, not a generic draft |
+| 5 | Personalisation pass on the guides | Doc delivered | `MAKE-IT-YOURS.md`: the repeated constructions to break, and one specific first-hand addition per article. Editing is the owner's to do |
 
 ## Blocked on the owner
 
