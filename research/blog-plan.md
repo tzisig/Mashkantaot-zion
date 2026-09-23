@@ -6,9 +6,9 @@ service page it supports.
 
 | # | Working title | Primary keyword | Volume | Supports | Notes |
 |---|---|---|---|---|---|
-| 1 | ריבית הפריים והשפעתה על המשכנתא | ריבית פריים | 10K-100K | `/services/mortgage-refinance` | Needs a dated figure from the Bank of Israel; the article must state the date and link to the source |
-| 2 | אישור עקרוני למשכנתא: מה זה ומה בודקים | אישור עקרוני למשכנתא | 1K-10K | `/services/new-mortgage` | Validity period differs per bank - say so instead of picking a number |
-| 3 | מה זה הלוואת בלון והלוואת גרייס | הלוואת בלון | 1K-10K | `/services/loan-consolidation` | Directive 329 caps contractor-subsidised balloon loans at 10% of quarterly volume |
+| 1 | ריבית הפריים (done) | ריבית פריים | 10K-100K | `/services/mortgage-refinance` | Needs a dated figure from the Bank of Israel; the article must state the date and link to the source |
+| 2 | אישור עקרוני למשכנתא (done) | אישור עקרוני למשכנתא | 1K-10K | `/services/new-mortgage` | Validity period differs per bank - say so instead of picking a number |
+| 3 | הלוואת גרייס, בולט ובלון | הלוואת בלון | 1K-10K | `/services/new-mortgage` | Done. Moved to new-mortgage: the topic is contractor deals, not consolidation |
 | 4 | תמהיל משכנתא: איך בונים ומה משנה | תמהיל משכנתא | 100-1K | `/services/new-mortgage` | Use the 66.66% variable-rate cap and the 30-year limit |
 | 5 | כמה משכנתא אפשר לקבל | כמה משכנתא אפשר לקבל | 100-1K | `/services/new-mortgage` | LTV 75/70/50 and the payment-to-income rule |
 | 6 | עמלת פירעון מוקדם: מתי משלמים וכמה | עמלת פירעון מוקדם | 100-1K | `/services/mortgage-refinance` | Five fee types, the 10-45 day notice, the 10-40% statutory discount |
