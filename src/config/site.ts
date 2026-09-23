@@ -65,7 +65,7 @@ export const site: SiteConfig = {
   googleBusinessUrl: null,
   businessId: '068422138',
   licenseNumber: null,
-  bookingUrl: null,
+  bookingUrl: 'https://calendar.app.google/Yadms4noFz6CmkCy7',
   foundedYear: null,
   businessHours: 'ימים א-ה, 9:00 עד 18:00',
   facts: {
