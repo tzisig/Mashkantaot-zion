@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Missing from './Missing.astro';
+import Icon from './Icon.astro';
 import { site, phoneLink, whatsappLink } from '../config/site';
 import { mainNav, legalNav } from '../data/navigation';
 import { getCollection } from 'astro:content';
@@ -36,17 +37,37 @@ const wa = whatsappLink();
 
     <div>
       <h2 class="mono-tag !text-highlight mb-3">// CONTACT</h2>
-      <ul class="space-y-2 text-white/90">
+      <ul class="space-y-3 text-white/90">
         <li>
-          וואטסאפ: {wa ? <a class="text-white" href={wa} target="_blank" rel="noopener" data-track="whatsapp_click">שליחת הודעה</a> : <Missing what="מספר וואטסאפ" />}
+          {wa ? (
+            <a class="flex items-center gap-2 text-white no-underline hover:underline" href={wa} target="_blank" rel="noopener" data-track="whatsapp_click">
+              <Icon name="message-circle" size={20} /> שליחת הודעה בוואטסאפ
+            </a>
+          ) : (
+            <span class="flex items-center gap-2"><Icon name="message-circle" size={20} /> <Missing what="מספר וואטסאפ" /></span>
+          )}
         </li>
         <li>
-          טלפון: {tel ? <a class="text-white tabular-nums" href={tel} data-track="phone_click" dir="ltr">{site.contact.phone}</a> : <Missing what="טלפון" />}
+          {tel ? (
+            <a class="flex items-center gap-2 text-white no-underline hover:underline" href={tel} data-track="phone_click">
+              <Icon name="phone" size={20} /> דברו איתנו בטלפון
+            </a>
+          ) : (
+            <span class="flex items-center gap-2"><Icon name="phone" size={20} /> <Missing what="טלפון" /></span>
+          )}
         </li>
         <li>
-          מייל: {site.contact.email ? <a class="text-white" href={`mailto:${site.contact.email}`} data-track="email_click" dir="ltr">{site.contact.email}</a> : <Missing what="מייל" />}
+          {site.contact.email ? (
+            <a class="flex items-center gap-2 text-white no-underline hover:underline" href={`mailto:${site.contact.email}`} data-track="email_click">
+              <Icon name="mail" size={20} /> שליחת מייל
+            </a>
+          ) : (
+            <span class="flex items-center gap-2"><Icon name="mail" size={20} /> <Missing what="מייל" /></span>
+          )}
         </li>
-        <li>{site.businessHours ?? <Missing what="שעות פעילות" />}</li>
+        <li class="flex items-center gap-2 text-white/75">
+          <Icon name="clock" size={20} /> {site.businessHours ?? <Missing what="שעות פעילות" />}
+        </li>
       </ul>
     </div>
   </div>
