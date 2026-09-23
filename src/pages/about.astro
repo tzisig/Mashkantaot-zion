@@ -14,7 +14,7 @@ const yearsAsEconomist = new Date().getFullYear() - site.economistSince;
 >
   <header class="blueprint border-b-2 border-ink">
     <div class="container-site py-12 md:py-16">
-      <p class="mono-tag">// ABOUT</p>
+      <p class="mono-tag" aria-hidden="true">// ABOUT</p>
       <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">
         כלכלן, ולא <span class="marker">קורס של חודשיים</span>
       </h1>
@@ -69,7 +69,8 @@ const yearsAsEconomist = new Date().getFullYear() - site.economistSince;
       </div>
 
       <section aria-labelledby="facts-title" class="mt-12 rounded-[16px] border border-ink/12 bg-surface p-6">
-        <h2 id="facts-title" class="mono-tag">// FACTS</h2>
+        <h2 id="facts-title" class="sr-only">נתונים בקצרה</h2>
+        <p class="mono-tag" aria-hidden="true">// FACTS</p>
         <dl class="mt-4 grid gap-5 sm:grid-cols-3">
           <div>
             <dt class="text-sm text-ink-soft">כלכלן מאז</dt>

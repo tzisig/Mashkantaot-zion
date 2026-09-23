@@ -20,14 +20,16 @@ const wa = whatsappLink();
     </div>
 
     <nav aria-label="שירותים">
-      <h2 class="mono-tag !text-highlight mb-3">// SERVICES</h2>
+      <h2 class="sr-only">שירותים</h2>
+      <p class="mono-tag !text-highlight mb-3" aria-hidden="true">// SERVICES</p>
       <ul class="space-y-2">
         {services.map((s) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={`/services/${s.id}`}>{s.data.heading}</a></li>)}
       </ul>
     </nav>
 
     <nav aria-label="ניווט באתר">
-      <h2 class="mono-tag !text-highlight mb-3">// SITE</h2>
+      <h2 class="sr-only">ניווט באתר</h2>
+      <p class="mono-tag !text-highlight mb-3" aria-hidden="true">// SITE</p>
       <ul class="space-y-2">
         {mainNav.map((i) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={i.href}>{i.label}</a></li>)}
         {site.bookingUrl && (
@@ -39,7 +41,8 @@ const wa = whatsappLink();
     </nav>
 
     <div>
-      <h2 class="mono-tag !text-highlight mb-3">// CONTACT</h2>
+      <h2 class="sr-only">יצירת קשר</h2>
+      <p class="mono-tag !text-highlight mb-3" aria-hidden="true">// CONTACT</p>
       <ul class="space-y-3 text-white/90">
         <li>
           {wa ? (

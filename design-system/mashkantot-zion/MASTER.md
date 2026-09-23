@@ -47,7 +47,7 @@ Rule: coral is for CTAs only. Never coral text on paper for body copy.
 ## Components (signature)
 - **Blueprint background**: paper + 2 grid layers (80px major, 16px minor). Used on hero and calculator page; plain paper elsewhere so the grid stays special.
 - **Marker headline**: one key phrase per H1 wrapped in `<mark>` with a highlight gradient under the lower 38%.
-- **Mono tag**: small monospace label above headings (`// 01`, section codes).
+- **Mono tag**: small monospace label above headings (`// 01`, section codes). English is fine here because it is decoration: every tag carries `aria-hidden="true"`, and where a section needs a heading the heading is Hebrew (visible, or `sr-only` when the design calls for the tag alone).
 - **Numbered service strip**: bordered row of services with `01..0n` mono numbers.
 - **Calculator card**: labeled range inputs + number inputs (keyboard/typing alternative), live result in an ink panel, `aria-live="polite"` on the result, fine print "להמחשה בלבד".
 - **Primary CTA**: coral, white text, hard ink shadow; hover darkens and shadow shrinks to 2px (pressed feel).

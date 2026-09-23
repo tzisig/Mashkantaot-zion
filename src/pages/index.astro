@@ -53,7 +53,7 @@ const steps = [
   <section class="blueprint border-b-2 border-ink">
     <div class="container-site grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.1fr_0.9fr]">
       <div>
-        <p class="mono-tag">// ECONOMIST SINCE {site.economistSince}</p>
+        <p class="mono-tag" aria-hidden="true">// ECONOMIST SINCE {site.economistSince}</p>
         <h1 class="mt-3 text-[clamp(2.25rem,5.4vw,3.75rem)] font-extrabold">
           המספרים של המשכנתא שלכם. <span class="marker">בלי אותיות קטנות.</span>
         </h1>
@@ -76,7 +76,7 @@ const steps = [
       {services.map((s, i) => (
         <li class="border-b-2 border-ink/10 sm:border-e-2 lg:[&:nth-child(4n)]:border-e-0">
           <a href={`/services/${s.id}`} class="group flex h-full flex-col gap-2 p-6 text-ink no-underline transition-colors hover:bg-paper">
-            <span class="mono-tag">{pad(i + 1)}</span>
+            <span class="mono-tag" aria-hidden="true">{pad(i + 1)}</span>
             <span class="flex items-center justify-between gap-2 text-xl font-bold">
               {s.data.heading}
               <span class="text-line transition-transform group-hover:-translate-x-1"><Icon name="arrow-left" /></span>
@@ -87,7 +87,7 @@ const steps = [
       ))}
       <li class="border-b-2 border-ink/10">
         <a href="/mortgage-calculator" class="flex h-full flex-col justify-center gap-2 bg-ink p-6 text-white no-underline hover:bg-ink-soft">
-          <span class="mono-tag !text-highlight">{pad(services.length + 1)}</span>
+          <span class="mono-tag !text-highlight" aria-hidden="true">{pad(services.length + 1)}</span>
           <span class="text-xl font-bold">מחשבון משכנתא מלא</span>
           <span class="text-[0.95rem] text-white/80">החזר חודשי, תקופה וריבית - בכמה שניות.</span>
         </a>
@@ -98,7 +98,7 @@ const steps = [
   <!-- Why -->
   <section aria-labelledby="why-title" class="py-16 md:py-24">
     <div class="container-site">
-      <p class="mono-tag">// WHY</p>
+      <p class="mono-tag" aria-hidden="true">// WHY</p>
       <h2 id="why-title" class="mt-2 max-w-2xl text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">
         ייעוץ שמתחיל <span class="marker">מהמספרים</span>, לא מהמכירה
       </h2>
@@ -117,12 +117,12 @@ const steps = [
   <!-- Process -->
   <section aria-labelledby="process-title" class="blueprint border-y-2 border-ink py-16 md:py-24">
     <div class="container-site">
-      <p class="mono-tag">// PROCESS</p>
+      <p class="mono-tag" aria-hidden="true">// PROCESS</p>
       <h2 id="process-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">איך זה עובד</h2>
       <ol class="mt-10 grid gap-5 md:grid-cols-4">
         {steps.map((s, i) => (
           <li class="reveal sheet p-6">
-            <span class="mono-tag">STEP {pad(i + 1)}</span>
+            <span class="mono-tag" aria-hidden="true">STEP {pad(i + 1)}</span>
             <h3 class="mt-2 text-xl font-bold">{s.title}</h3>
             <p class="mt-2 text-ink-soft">{s.text}</p>
           </li>
@@ -139,7 +139,7 @@ const steps = [
       <div class="container-site">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p class="mono-tag">// GUIDES</p>
+            <p class="mono-tag" aria-hidden="true">// GUIDES</p>
             <h2 id="guides-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">מדריכים והסברים</h2>
           </div>
           <a href="/guides" class="font-bold text-line-strong">לכל המדריכים</a>
@@ -164,7 +164,7 @@ const steps = [
   <!-- Testimonials: real reviews only -->
   <section aria-labelledby="reviews-title" class="py-16 md:py-24">
     <div class="container-site">
-      <p class="mono-tag">// REVIEWS</p>
+      <p class="mono-tag" aria-hidden="true">// REVIEWS</p>
       <h2 id="reviews-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">מה אומרים הלקוחות</h2>
       <div class="mt-8 rounded-[16px] border-2 border-dashed border-ink/25 p-8 text-center text-ink-soft">
         <Missing what="המלצות אמיתיות מלקוחות (או חיבור לביקורות Google)" />
@@ -176,7 +176,7 @@ const steps = [
   <section aria-labelledby="cta-title" class="border-t-2 border-ink bg-ink py-16 text-white md:py-20">
     <div class="container-site flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
       <div>
-        <p class="mono-tag !text-highlight">// NEXT STEP</p>
+        <p class="mono-tag !text-highlight" aria-hidden="true">// NEXT STEP</p>
         <h2 id="cta-title" class="mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] font-bold">בואו נבדוק את המספרים שלכם</h2>
         <p class="mt-3 max-w-xl text-white/80">שיחת היכרות קצרה, בלי התחייבות. אחריה תדעו אם ובמה ייעוץ יכול לעזור לכם.</p>
       </div>
