@@ -14,7 +14,7 @@ service page it supports.
 | 6 | עמלת פירעון מוקדם (done) | עמלת פירעון מוקדם | 100-1K | `/services/mortgage-refinance` | Five fee types, the 10-45 day notice, the 10-40% statutory discount |
 | 7 | הלוואת גישור (done) | הלוואת גישור | 100-1K | `/services/equity-mortgage` | Directive 329 treats bridge loans up to three years separately |
 | 8 | הקפאת משכנתא ודחיית תשלום (done) | הקפאת משכנתא | 100-1K | `/services/loan-consolidation` | Sensitive topic: no promises, explain the cost of deferral |
-| 9 | מה זה משכנתא, בשפה פשוטה | מה זה משכנתא | 100-1K | `/services/new-mortgage` | Entry-level piece, good internal-link hub |
+| 9 | מה זה משכנתא, בשפה פשוטה (done) | מה זה משכנתא | 100-1K | `/services/new-mortgage` | Entry-level piece, good internal-link hub |
 
 ## Rules for every article
 
