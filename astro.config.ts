@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { site } from './src/config/site';
 
+
 // The domain lives in src/config/site.ts only - this file follows it.
 export default defineConfig({
   site: site.url,

@@ -78,4 +78,25 @@ const landing = defineCollection({
   }),
 });
 
-export const collections = { services, areas, landing };
+const blog = defineCollection({
+  loader: glob({ base: './src/content/blog', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    /** Page H1, when it should differ from the SEO title. */
+    heading: z.string().optional(),
+    description: z.string().min(80).max(180),
+    primaryKeyword: z.string(),
+    secondaryKeywords: z.array(z.string()).default([]),
+    published: z.date(),
+    updated: z.date().optional(),
+    /** Service page this article supports; linked from the article and the CTA. */
+    supports: z.string().optional(),
+    faqs: z.array(faq).default([]),
+    sources: z.array(source).default([]),
+    /** Pin to the top of the archive. */
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(true),
+  }),
+});
+
+export const collections = { services, areas, landing, blog };

@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaCard from '../../components/CtaCard.astro';
+import Icon from '../../components/Icon.astro';
+import Missing from '../../components/Missing.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
+);
+const featured = posts.filter((p) => p.data.featured);
+const rest = posts.filter((p) => !p.data.featured);
+const fmt = (d: Date) => d.toLocaleDateString('he-IL', { year: 'numeric', month: 'long' });
+---
+
+<BaseLayout
+  title="מדריכים והסברים על משכנתאות"
+  description="הסברים מסודרים על משכנתאות: ריביות ומסלולים, אישור עקרוני, תמהיל, עמלות פירעון מוקדם ומה שכדאי לבדוק לפני שחותמים. בלי הבטחות, עם מקורות."
+  draft
+>
+  <header class="blueprint border-b-2 border-ink">
+    <div class="container-site py-12 md:py-16">
+      <p class="mono-tag">// GUIDES</p>
+      <h1 class="mt-3 text-[clamp(2rem,4.6vw,3.25rem)] font-extrabold">מדריכים <span class="marker">והסברים</span></h1>
+      <p class="mt-4 max-w-2xl text-lg text-ink-soft">
+        הדברים שחוזרים בכל שיחה, כתובים במקום אחד. כל מספר במדריכים האלה מגיע ממקור רשמי, והמקורות מופיעים בסוף כל מאמר.
+      </p>
+    </div>
+  </header>
+
+  <div class="container-site grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+    <div>
+      {posts.length === 0 ? (
+        <div class="rounded-[16px] border-2 border-dashed border-ink/25 p-8 text-center">
+          <p class="text-ink-soft">
+            עוד לא פורסמו מדריכים: <Missing what="המאמר הראשון" />
+          </p>
+        </div>
+      ) : (
+        <>
+          {featured.length > 0 && (
+            <ul class="mb-8 grid gap-5">
+              {featured.map((post) => (
+                <li>
+                  <a href={`/blog/${post.id}`} class="sheet block p-6 text-ink no-underline">
+                    <span class="mono-tag">// מומלץ</span>
+                    <h2 class="mt-2 text-2xl font-bold">{post.data.heading ?? post.data.title}</h2>
+                    <p class="mt-2 text-ink-soft">{post.data.description}</p>
+                    <span class="mt-4 flex items-center gap-2 font-bold text-line-strong">
+                      לקריאה <Icon name="arrow-left" size={18} />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <ul class="grid gap-5 sm:grid-cols-2">
+            {rest.map((post) => (
+              <li>
+                <a href={`/blog/${post.id}`} class="group flex h-full flex-col gap-2 rounded-[16px] border border-ink/12 bg-surface p-6 text-ink no-underline transition-shadow hover:shadow-sheet">
+                  <span class="mono-tag">{fmt(post.data.published)}</span>
+                  <span class="text-xl font-bold">{post.data.heading ?? post.data.title}</span>
+                  <span class="text-[0.95rem] text-ink-soft">{post.data.description}</span>
+                  <span class="mt-auto flex items-center gap-2 pt-2 font-bold text-line-strong">
+                    לקריאה <span class="transition-transform group-hover:-translate-x-1"><Icon name="arrow-left" size={18} /></span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+
+    <div class="lg:sticky lg:top-24 lg:self-start">
+      <CtaCard
+        title="שאלה ספציפית על המקרה שלכם?"
+        text="מדריך עונה על השאלות הכלליות. את המספרים שלכם צריך לבדוק אישית."
+      />
+    </div>
+  </div>
+</BaseLayout>
