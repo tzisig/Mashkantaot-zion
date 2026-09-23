@@ -11,8 +11,8 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
   <div class="container-site flex h-[72px] items-center justify-between gap-4">
     <Logo noTagline />
 
-    <nav aria-label="ניווט ראשי" class="hidden lg:block">
-      <ul class="flex items-center gap-6 text-[0.95rem] font-medium">
+    <nav aria-label="ניווט ראשי" class="hidden xl:block">
+      <ul class="flex items-center gap-5 text-[0.95rem] font-medium whitespace-nowrap">
         {mainNav.map((item) => (
           <li>
             <a
@@ -31,7 +31,7 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
       <a href="/contact" class="btn btn-primary hidden !min-h-11 !px-5 sm:inline-flex">לשיחת היכרות</a>
       <button
         type="button"
-        class="grid size-11 place-items-center rounded-[10px] border-2 border-ink lg:hidden"
+        class="grid size-11 place-items-center rounded-[10px] border-2 border-ink xl:hidden"
         aria-expanded="false"
         aria-controls="mobile-nav"
         data-menu-toggle
@@ -43,7 +43,7 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
     </div>
   </div>
 
-  <nav id="mobile-nav" aria-label="ניווט ראשי (נייד)" class="border-t-2 border-ink bg-surface lg:hidden" hidden>
+  <nav id="mobile-nav" aria-label="ניווט ראשי (נייד)" class="border-t-2 border-ink bg-surface xl:hidden" hidden>
     <ul class="container-site flex flex-col py-2">
       {mainNav.map((item) => (
         <li>
