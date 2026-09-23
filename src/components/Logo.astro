@@ -4,13 +4,19 @@ import { site } from '../config/site';
 interface Props {
   /** Use the white version on dark surfaces. */
   onDark?: boolean;
+  /** Stacked lockup instead of the horizontal one. */
+  stacked?: boolean;
   class?: string;
 }
 
-const { onDark = false, class: className } = Astro.props;
-const src = onDark ? '/brand/logo-horizontal-onDark.svg' : '/brand/logo-horizontal.svg';
+const { onDark = false, stacked = false, class: className } = Astro.props;
+const lockup = stacked ? 'logo-stacked' : 'logo-horizontal';
+const src = `/brand/${lockup}${onDark ? '-onDark' : ''}.svg`;
+const size = stacked
+  ? { width: 210, height: 250, cls: 'h-28 w-auto' }
+  : { width: 220, height: 46, cls: 'h-10 w-auto md:h-11' };
 ---
 
 <a href="/" class={`inline-flex items-center no-underline ${className ?? ''}`} aria-label={`${site.name} - דף הבית`}>
-  <img src={src} alt={site.name} width="220" height="46" class="h-10 w-auto md:h-11" />
+  <img src={src} alt={site.name} width={size.width} height={size.height} class={size.cls} />
 </a>

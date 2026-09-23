@@ -106,15 +106,17 @@ def build(stacked: bool, on_dark: bool) -> str:
         height = 200
         width += rule_room
         text_right = width - iw - gap - 20 - rule_room
+        tag_right = text_right - (word_w - tag_w) / 2
         body = (
             f'<g transform="translate({width - iw - 20:.1f} 18) scale({icon_scale:.4f})">'
             f'<path fill="{ink}" fill-rule="evenodd" d="{navy_d}"/>'
             f'<path fill="{CORAL}" fill-rule="evenodd" d="{coral_d}"/></g>'
             f'<g fill="{ink}" transform="translate({text_right:.1f} 108)">{brand_d}</g>'
             f'<g fill="{CORAL}" transform="translate({text_right:.1f} 108)">{name_d}</g>'
-            f'<g fill="{ink}" transform="translate({text_right:.1f} 158)">{tag_d}</g>'
-            f'<path stroke="{CORAL}" stroke-width="3" d="M{text_right - tag_w - 50:.1f} 148h34'
-            f'M{text_right + 16:.1f} 148h34"/>'
+            # the tagline is centred under the wordmark, not aligned to its edge
+            f'<g fill="{ink}" transform="translate({tag_right:.1f} 158)">{tag_d}</g>'
+            f'<path stroke="{CORAL}" stroke-width="3" d="M{tag_right - tag_w - 50:.1f} 148h34'
+            f'M{tag_right + 16:.1f} 148h34"/>'
         )
 
     return (
