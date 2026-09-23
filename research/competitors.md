@@ -61,3 +61,23 @@ Typical fees (Midrag price guide): single consultation 500-1,000 ILS; mix buildi
 - https://www.hasolidit.com/kehila/threads/%D7%99%D7%95%D7%A2%D7%A5-%D7%9E%D7%A9%D7%9B%D7%A0%D7%AA%D7%90%D7%95%D7%AA-%D7%9B%D7%9F-%D7%9C%D7%90-%D7%9C%D7%9E%D7%94.29382/
 - https://www.calcalist.co.il/real-estate/article/bjy11rmqfqjgl
 - https://www.nadlancenter.co.il/article/13319
+
+## Pricing transparency (checked 2026-09-23)
+
+Eight pages that rank for "כמה עולה יועץ משכנתאות" were opened and read. Only one
+publishes the company's own fees. The rest publish market ranges, and two of them
+disclaim the ranges explicitly.
+
+| Site | Publishes | Figures |
+|---|---|---|
+| evensapir.co.il/mortgage-consulting-cost | **Its own fee table** | New mortgage 6,000-9,000; refinance 7,500-9,500; first meeting 500-800. Excl. VAT, standard cases |
+| pro.co.il/mortgage-councils/pricing | Directory rates from reported jobs, updated monthly | Mix meeting 2,200-3,000; obtaining a mortgage 5,000-8,000; full accompaniment 5,500-10,000 |
+| midrag.co.il/Content/Price/6875 | Directory guide, basis not stated | Single meeting 500-1,000; mix 2,000-3,000; full 5,000-10,000; complex 10,000-15,000+ |
+| mym.co.il | Market ranges, disclaimed | States in writing that the figures are not what the firm charges |
+| lsmashkanta.co.il | Market ranges, disclaimed | Notes there is no binding fee scale for advisors |
+| alpm.co.il, mashkantaguru.co.il, pln.co.il, cantaio.co.il, mashkantaut.co.il | Market ranges only | No own price stated anywhere on the page |
+
+Implication for `/pricing`: publishing an own fee table is close to unoccupied
+ground in this niche. The one site that does it pairs each figure with what the
+service includes and marks VAT treatment. The same page also claims a savings
+figure, which this site will not do (see `LEGAL-CHECKLIST.md`).
