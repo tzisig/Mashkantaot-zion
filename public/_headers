@@ -1,15 +1,17 @@
 # Cloudflare Pages response headers.
 #
-# The noindex block below keeps the staging deployment out of search results
-# while the site runs on *.pages.dev without a domain. It MUST be removed on
-# launch day: it is item "noindex ו-Discourage search engines הוסרו מהאתר החי"
-# in the GO LIVE GATE, and it is listed in ROADMAP.md.
+# One rule block per path pattern: a second `/*` block does not merge with the
+# first, it replaces it. Everything for `/*` therefore lives together here.
+#
+# X-Robots-Tag keeps the staging deployment out of search results while the site
+# runs on *.pages.dev without a domain. It MUST be removed on launch day: it is
+# the GO LIVE GATE item "noindex ו-Discourage search engines הוסרו מהאתר החי",
+# and it is listed in ROADMAP.md.
+#
+# HSTS is deliberately left out until the real domain is attached, because
+# *.pages.dev is a hostname shared with every other Pages project.
 /*
   X-Robots-Tag: noindex, nofollow
-
-# Security headers that are safe on any host. HSTS is deliberately left out
-# until the real domain is attached, because *.pages.dev is a shared hostname.
-/*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
