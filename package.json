@@ -23,7 +23,6 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@bruits/satteri-wasm32-wasi": "^0.10.5",
     "@cloudflare/workers-types": "^5.20260922.1"
   }
 }
