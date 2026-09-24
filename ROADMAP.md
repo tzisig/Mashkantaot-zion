@@ -17,5 +17,5 @@ Agreed order of work (2026-09-22). Done in this order unless the owner says othe
 - Google Business Profile: address + profile URL (`site.googleBusinessUrl`), currently null
 - Cloudflare Pages, GA4, Turnstile and Google Sheets accounts
 - Lawyer review of `LEGAL-CHECKLIST.md`
-- Local detail blocks on the 9 city pages
+- Local detail blocks on the 9 city pages (worksheet ready: `CITY-PAGES.md`)
 - Pricing model for `/pricing`
