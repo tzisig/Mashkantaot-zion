@@ -37,7 +37,9 @@ if (site.address) {
     addressCountry: 'IL',
   };
 }
-if (site.googleBusinessUrl) business.sameAs = [site.googleBusinessUrl];
+// sameAs ties the business entity to its own profiles. Only the ones that exist.
+const sameAs = [site.googleBusinessUrl, ...Object.values(site.social)].filter(Boolean);
+if (sameAs.length) business.sameAs = sameAs;
 
 const jsonLd = [business, ...schema];
 ---

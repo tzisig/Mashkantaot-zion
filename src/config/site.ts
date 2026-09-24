@@ -42,11 +42,19 @@ export interface SiteConfig {
   };
   /** Year the owner started working as an economist (confirmed by the owner). */
   economistSince: number;
+  /**
+   * Public profile URLs. Every filled entry goes into `sameAs` in the schema and
+   * gets an icon in the footer. Leave a network null until its profile is real:
+   * an icon leading to an empty page costs more trust than it earns.
+   */
   social: {
     facebook: string | null;
-    tiktok: string | null;
     instagram: string | null;
     youtube: string | null;
+    tiktok: string | null;
+    linkedin: string | null;
+    pinterest: string | null;
+    x: string | null;
   };
 }
 
@@ -74,9 +82,12 @@ export const site: SiteConfig = {
   economistSince: 2007,
   social: {
     facebook: null,
-    tiktok: null,
     instagram: null,
     youtube: null,
+    tiktok: null,
+    linkedin: null,
+    pinterest: null,
+    x: null,
   },
 };
 

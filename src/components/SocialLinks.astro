@@ -1,0 +1,60 @@
+---
+/**
+ * Footer social links. Renders only the networks that have a URL in site.social,
+ * so nothing appears until a profile actually exists.
+ *
+ * Brand marks come from simple-icons (CC0). LinkedIn is not in that set, so it
+ * falls back to its Hebrew name as a text link.
+ */
+import { siFacebook, siInstagram, siYoutube, siTiktok, siPinterest, siX } from 'simple-icons';
+import { site } from '../config/site';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+type Mark = { path: string } | null;
+
+const networks: { key: keyof typeof site.social; label: string; mark: Mark }[] = [
+  { key: 'facebook', label: 'פייסבוק', mark: siFacebook },
+  { key: 'instagram', label: 'אינסטגרם', mark: siInstagram },
+  { key: 'youtube', label: 'יוטיוב', mark: siYoutube },
+  { key: 'tiktok', label: 'טיקטוק', mark: siTiktok },
+  { key: 'linkedin', label: 'לינקדאין', mark: null },
+  { key: 'pinterest', label: 'פינטרסט', mark: siPinterest },
+  { key: 'x', label: 'X', mark: siX },
+];
+
+const active = networks
+  .map((n) => ({ ...n, url: site.social[n.key] }))
+  .filter((n): n is typeof n & { url: string } => Boolean(n.url));
+---
+
+{active.length > 0 && (
+  <nav aria-labelledby="social-title" class={className}>
+    <h2 id="social-title" class="sr-only">הרשתות החברתיות שלנו</h2>
+    <ul class="flex flex-wrap items-center gap-1">
+      {active.map((n) => (
+        <li>
+          <a
+            href={n.url}
+            target="_blank"
+            rel="noopener"
+            data-track="social_click"
+            class="grid min-h-11 min-w-11 place-items-center rounded-[10px] px-2 text-white/90 no-underline hover:bg-white/10 hover:text-white"
+          >
+            <span class="sr-only">{n.label}</span>
+            {n.mark ? (
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d={n.mark.path} />
+              </svg>
+            ) : (
+              <span aria-hidden="true" class="text-sm font-bold">{n.label}</span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

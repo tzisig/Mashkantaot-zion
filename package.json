@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.3",
     "lucide-static": "^1.47.0",
+    "simple-icons": "^16.32.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "worker-mailer": "^1.2.1",
