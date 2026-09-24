@@ -10,9 +10,15 @@ const baseNav: NavItem[] = [
   { label: 'מחשבון משכנתא', href: '/mortgage-calculator' },
   { label: 'מחירים', href: '/pricing' },
   { label: 'מדריכים', href: '/guides' },
+  { label: 'אזורי שירות', href: '/areas' },
   { label: 'אודות', href: '/about' },
-  { label: 'שאלות נפוצות', href: '/faq' },
   { label: 'צור קשר', href: '/contact' },
+];
+
+/** Pages that earn a sitewide link but not a slot in the top nav. */
+export const footerExtraNav: NavItem[] = [
+  { label: 'שאלות נפוצות', href: '/faq' },
+  { label: 'העברת מסמכים', href: '/documents' },
 ];
 
 /** The booking page only appears once site.bookingUrl is set. */

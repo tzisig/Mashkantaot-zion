@@ -3,7 +3,7 @@ import Logo from './Logo.astro';
 import Missing from './Missing.astro';
 import Icon from './Icon.astro';
 import { site, phoneLink, whatsappLink } from '../config/site';
-import { mainNav, legalNav } from '../data/navigation';
+import { mainNav, footerExtraNav, legalNav } from '../data/navigation';
 import { getCollection } from 'astro:content';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
@@ -31,12 +31,9 @@ const wa = whatsappLink();
       <h2 class="sr-only">ניווט באתר</h2>
       <p class="mono-tag !text-highlight mb-3" aria-hidden="true">// SITE</p>
       <ul class="space-y-2">
-        {mainNav.map((i) => <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={i.href}>{i.label}</a></li>)}
-        {site.bookingUrl && (
-          <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/book">קביעת פגישה</a></li>
-        )}
-        <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/areas">אזורי שירות</a></li>
-        <li><a class="text-white/90 no-underline hover:text-white hover:underline" href="/documents">העברת מסמכים</a></li>
+        {[...mainNav, ...footerExtraNav].map((i) => (
+          <li><a class="text-white/90 no-underline hover:text-white hover:underline" href={i.href}>{i.label}</a></li>
+        ))}
       </ul>
     </nav>
 
