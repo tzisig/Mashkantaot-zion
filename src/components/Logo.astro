@@ -8,10 +8,12 @@ interface Props {
   stacked?: boolean;
   /** Drop the tagline - it is unreadable below roughly 56px of lockup height. */
   noTagline?: boolean;
+  /** Below the fold (the footer lockup): defer it instead of blocking the header one. */
+  lazy?: boolean;
   class?: string;
 }
 
-const { onDark = false, stacked = false, noTagline = false, class: className } = Astro.props;
+const { onDark = false, stacked = false, noTagline = false, lazy = false, class: className } = Astro.props;
 const src = `/brand/logo-${stacked ? 'stacked' : 'horizontal'}${noTagline ? '-notag' : ''}${onDark ? '-onDark' : ''}.svg`;
 const size = stacked
   ? { width: 210, height: noTagline ? 190 : 250, cls: 'h-32 w-auto' }
@@ -19,5 +21,14 @@ const size = stacked
 ---
 
 <a href="/" class={`inline-flex items-center no-underline ${className ?? ''}`} aria-label={`${site.name} - דף הבית`}>
-  <img src={src} alt={site.name} width={size.width} height={size.height} class={size.cls} />
+  <img
+    src={src}
+    alt={site.name}
+    width={size.width}
+    height={size.height}
+    class={size.cls}
+    loading={lazy ? 'lazy' : 'eager'}
+    decoding={lazy ? 'async' : 'sync'}
+    fetchpriority={lazy ? 'low' : 'high'}
+  />
 </a>

@@ -150,6 +150,14 @@ const field =
         return;
       }
 
+      // First-touch source, stored by Analytics.astro on the landing page.
+      try {
+        const attribution = sessionStorage.getItem('mz:attribution');
+        if (attribution) data.append('attribution', attribution);
+      } catch {
+        // Storage blocked: send the lead without a source rather than failing.
+      }
+
       const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
       button.disabled = true;
       status.textContent = 'שולח...';

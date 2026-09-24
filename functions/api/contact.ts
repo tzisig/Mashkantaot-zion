@@ -36,6 +36,8 @@ interface Lead {
   message: string;
   channel: string;
   page: string;
+  /** First-touch source: utm_*, gclid/fbclid, referrer and landing page. */
+  attribution: string;
   userAgent: string;
   receivedAt: string;
 }
@@ -89,6 +91,7 @@ async function sendMail(env: Env, lead: Lead) {
     lead.message || '(לא נכתבה הודעה)',
     '',
     `עמוד: ${lead.page}`,
+    `מקור: ${lead.attribution || 'ישיר / לא ידוע'}`,
     `התקבל: ${lead.receivedAt}`,
   ];
 
@@ -142,6 +145,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     message: clean(form.get('message'), 4000),
     channel: clean(form.get('channel'), 40) || 'וואטסאפ',
     page: clean(request.headers.get('referer'), 300),
+    attribution: clean(form.get('attribution'), 600),
     userAgent: clean(request.headers.get('user-agent'), 300),
     receivedAt: new Date().toISOString(),
   };

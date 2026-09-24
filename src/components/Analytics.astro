@@ -102,4 +102,28 @@ const hasTags = Boolean(ga4Id || metaPixelId || tiktokPixelId);
     window.dataLayer.push({ event: name });
     if (typeof window.gtag === 'function') window.gtag('event', name);
   });
+
+  /**
+   * First-touch attribution. Captured on every page so a visitor who lands on a
+   * campaign URL and submits somewhere else still arrives with a source, and
+   * written once so the first touch is not overwritten by later internal pages.
+   * sessionStorage only, so it disappears with the tab and carries no identifier.
+   */
+  try {
+    if (!sessionStorage.getItem('mz:attribution')) {
+      const q = new URLSearchParams(location.search);
+      const utm = {};
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => {
+        const v = q.get(k);
+        if (v) utm[k] = v.slice(0, 120);
+      });
+      const ref = document.referrer && !document.referrer.startsWith(location.origin) ? document.referrer : '';
+      sessionStorage.setItem(
+        'mz:attribution',
+        JSON.stringify({ ...utm, referrer: ref.slice(0, 200), landing_page: location.pathname }),
+      );
+    }
+  } catch (e) {
+    // Private mode or blocked storage: the lead still sends, just without a source.
+  }
 </script>
