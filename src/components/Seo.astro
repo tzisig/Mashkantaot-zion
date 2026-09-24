@@ -14,7 +14,13 @@ export interface SeoProps {
 const { title, description, noindex = false, ogImage = '/og-image.jpg', schema = [] } = Astro.props as SeoProps;
 
 const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site ?? site.url).href;
+/**
+ * `build.format: 'file'` makes the build-time pathname end in `.html`, while the
+ * host serves and the sitemap lists the extensionless URL. Strip it so the
+ * canonical, the sitemap and the internal links all name the same address.
+ */
+const cleanPath = Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '');
+const canonical = new URL(cleanPath.replace(/\/$/, '') || '/', Astro.site ?? site.url).href;
 const image = ogImage ? new URL(ogImage, Astro.site ?? site.url).href : undefined;
 
 const business: Record<string, unknown> = {
