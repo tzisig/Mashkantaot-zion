@@ -1,10 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import { mainNav } from '../data/navigation';
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => current === href || current.startsWith(`${href}/`);
+
+/** Cities hang off the areas item as a submenu, in the same order as /areas. */
+const cities = (await getCollection('areas'))
+  .sort((a, b) => a.data.city.localeCompare(b.data.city, 'he'))
+  .map((a) => ({ label: a.data.city, href: `/areas/${a.id}` }));
+
+const submenuFor = (href: string) => (href === '/areas' ? cities : null);
 ---
 
 <header class="sticky top-0 z-40 border-b-2 border-ink bg-paper/95 backdrop-blur">
@@ -13,17 +21,56 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
 
     <nav aria-label="ניווט ראשי" class="hidden xl:block">
       <ul class="flex items-center gap-5 text-[0.95rem] font-medium whitespace-nowrap">
-        {mainNav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class="text-ink no-underline hover:text-line-strong aria-[current=page]:text-line-strong aria-[current=page]:underline"
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
+        {mainNav.map((item) => {
+          const sub = submenuFor(item.href);
+          return (
+            <li class={sub ? 'relative' : undefined} data-submenu={sub ? '' : undefined}>
+              <span class="flex items-center">
+                <a
+                  href={item.href}
+                  class="flex min-h-11 items-center text-ink no-underline hover:text-line-strong aria-[current=page]:text-line-strong aria-[current=page]:underline"
+                  aria-current={isCurrent(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+                {sub && (
+                  <button
+                    type="button"
+                    class="grid min-h-11 w-7 place-items-center text-ink hover:text-line-strong"
+                    aria-expanded="false"
+                    aria-controls="areas-submenu"
+                    data-submenu-toggle
+                  >
+                    <span class="sr-only">הצגת רשימת הערים</span>
+                    <span class="transition-transform duration-150" data-submenu-chevron>
+                      <Icon name="chevron-down" size={16} />
+                    </span>
+                  </button>
+                )}
+              </span>
+
+              {sub && (
+                <ul
+                  id="areas-submenu"
+                  class="absolute start-0 top-full z-50 min-w-[220px] rounded-[16px] border-2 border-ink bg-surface p-2 shadow-sheet"
+                  hidden
+                >
+                  {sub.map((city) => (
+                    <li>
+                      <a
+                        href={city.href}
+                        class="flex min-h-11 items-center rounded-[10px] px-3 text-ink no-underline hover:bg-paper hover:text-line-strong aria-[current=page]:text-line-strong aria-[current=page]:underline"
+                        aria-current={isCurrent(city.href) ? 'page' : undefined}
+                      >
+                        {city.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </nav>
 
@@ -45,17 +92,52 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
 
   <nav id="mobile-nav" aria-label="ניווט ראשי (נייד)" class="border-t-2 border-ink bg-surface xl:hidden" hidden>
     <ul class="container-site flex flex-col py-2">
-      {mainNav.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class="flex min-h-12 items-center border-b border-ink/10 text-lg text-ink no-underline"
-            aria-current={isCurrent(item.href) ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        </li>
-      ))}
+      {mainNav.map((item) => {
+        const sub = submenuFor(item.href);
+        return (
+          <li data-submenu={sub ? '' : undefined}>
+            <span class="flex items-center justify-between border-b border-ink/10">
+              <a
+                href={item.href}
+                class="flex min-h-12 flex-1 items-center text-lg text-ink no-underline"
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+              {sub && (
+                <button
+                  type="button"
+                  class="grid size-12 place-items-center text-ink"
+                  aria-expanded="false"
+                  aria-controls="areas-submenu-mobile"
+                  data-submenu-toggle
+                >
+                  <span class="sr-only">הצגת רשימת הערים</span>
+                  <span class="transition-transform duration-150" data-submenu-chevron>
+                    <Icon name="chevron-down" size={20} />
+                  </span>
+                </button>
+              )}
+            </span>
+
+            {sub && (
+              <ul id="areas-submenu-mobile" class="bg-paper" hidden>
+                {sub.map((city) => (
+                  <li>
+                    <a
+                      href={city.href}
+                      class="flex min-h-11 items-center border-b border-ink/10 pe-6 text-ink no-underline"
+                      aria-current={isCurrent(city.href) ? 'page' : undefined}
+                    >
+                      {city.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        );
+      })}
       <li class="py-4"><a href="/contact" class="btn btn-primary w-full">לשיחת היכרות</a></li>
     </ul>
   </nav>
@@ -80,4 +162,42 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
       }
     });
   }
+
+  /**
+   * Submenu: opens on hover and on keyboard focus, and the button toggles it on
+   * click for touch. The parent stays a plain link to /areas.
+   */
+  document.querySelectorAll<HTMLElement>('[data-submenu]').forEach((item) => {
+    const button = item.querySelector<HTMLButtonElement>('[data-submenu-toggle]');
+    const list = item.querySelector<HTMLUListElement>('ul');
+    const chevron = item.querySelector<HTMLElement>('[data-submenu-chevron]');
+    if (!button || !list) return;
+
+    const setOpen = (open: boolean) => {
+      button.setAttribute('aria-expanded', String(open));
+      list.hidden = !open;
+      if (chevron) chevron.style.transform = open ? 'rotate(180deg)' : '';
+    };
+
+    button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+
+    // Hover only where there is a real pointer, so a tap does not open and
+    // immediately close the list on touch devices.
+    if (window.matchMedia('(hover: hover)').matches) {
+      item.addEventListener('mouseenter', () => setOpen(true));
+      item.addEventListener('mouseleave', () => setOpen(false));
+    }
+
+    item.addEventListener('focusin', () => setOpen(true));
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget as Node)) setOpen(false);
+    });
+
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !list.hidden) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+  });
 </script>
