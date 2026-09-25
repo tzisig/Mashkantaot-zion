@@ -5,7 +5,7 @@
  */
 export const analytics = {
   /** GA4 measurement ID, e.g. "G-XXXXXXX". */
-  ga4Id: null as string | null,
+  ga4Id: 'G-EKVL8HYDQR' as string | null,
   metaPixelId: null as string | null,
   tiktokPixelId: null as string | null,
 };
